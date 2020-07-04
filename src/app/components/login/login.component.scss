@@ -1,0 +1,100 @@
+body {
+  background-color: darkgrey !important;
+}
+.login-btn {
+  border-radius: 15px;
+  width: 25%;
+}
+.login-btn:hover {
+  background: green;
+  color: white;
+}
+.title {
+  margin-top: 30px;
+  margin-bottom: 30px;
+  vertical-align: middle;
+  font-family: Nunito;
+  text-align: center;
+  font-size: 56px;
+}
+.center {
+  line-height: 200px;
+  height: 200px;
+  text-align: center;
+}
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 3px solid #eeeeee;
+  border-radius: 0.50rem;
+  box-shadow: 2px 2px 3px 4px #ccc;
+}
+.card-header {
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 0;
+  background-color: #fff;
+  color: #fff;
+  border-bottom: 2px solid #eeeeee;
+  border-radius: 10px;
+}
+.card-header-primary
+{
+  background: linear-gradient(30deg, #ab47bc, #8e24aa);
+  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(156, 39, 176, 0.4);
+}
+.card-title h2
+{
+  font-family: 'Nunito';
+}
+.card-body {
+  flex: 1 1 auto;
+  padding: 1.25rem;
+}
+.card-footer {
+  padding: 0.75rem 1.25rem;
+  background-color: #fff;
+  border-top: 1px solid #eeeeee;
+}
+h2 {
+  padding: 2px;
+  font-family: "Nunito";
+}
+.col-form-control {
+  margin: 5px;
+}
+.login-title {
+  color: rgb(247, 255, 210);
+}
+a {
+  color: black;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+a:hover {
+  color: #0a6ebd;
+  text-decoration: underline;
+}
+.form-control,
+label,
+input::placeholder {
+  line-height: 1.1;
+}
+
+label {
+  color: #aaaaaa;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+.full-width {
+  width: 100%;
+}
