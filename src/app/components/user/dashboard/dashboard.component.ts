@@ -12,16 +12,11 @@ export class DashboardComponent implements OnInit {
   dataTable:any;
   constructor(private router:Router)
   {
-      if(localStorage.getItem('user')!=null)
+      if(localStorage.getItem("user")===null)
       {
-        let user=localStorage.getItem('user');
-        console.log(JSON.parse(user)['username']);
+        this.router.navigate(['']);
       }
-      else
-      {
-          this.router.navigate(['']);
-      }
-   }
+  }
    ngOnInit(){
 
    }

@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { RegisterRequest } from '../Dto/RegisterRequest';
 import { Observable } from 'rxjs';
 import { LoginRequest } from '../Dto/LoginRequest';
+import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
   private url='http://localhost:8080/';
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient,private router:Router) { }
 
   registerUser(registerRequest:RegisterRequest):Observable<any>
   {
@@ -18,5 +19,11 @@ export class AuthService {
   loginUser(loginRequest:LoginRequest):Observable<any>
   {
     return this.httpClient.post(this.url + "login", loginRequest);
+  }
+  logoutUser()
+  {
+    console.log('cleared');
+    localStorage.clear();
+    this.router.navigate(['']);
   }
 }
