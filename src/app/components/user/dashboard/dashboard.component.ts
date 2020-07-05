@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ElementRef,ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-// import { HeaderComponent } from '../header/HeaderComponent';
+declare var $;
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -8,19 +8,26 @@ import { Router } from '@angular/router';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private router:Router) {
-    if(localStorage.length!=0)
-    {
-      let user=localStorage.getItem('user');
-      console.log(JSON.parse(user)['username']);
-    }
-    else
-    {
-        this.router.navigate(['']);
-    }
+  @ViewChild('dataTable') table:ElementRef;
+  dataTable:any;
+  constructor(private router:Router)
+  {
+      if(localStorage.getItem('user')!=null)
+      {
+        let user=localStorage.getItem('user');
+        console.log(JSON.parse(user)['username']);
+      }
+      else
+      {
+          this.router.navigate(['']);
+      }
    }
+   ngOnInit(){
 
-  ngOnInit(): void {
-  }
+   }
+   ngAfterViewInit(){
+    this.dataTable=$(this.table.nativeElement);
+    this.dataTable.dataTable();
+   }
 
 }

@@ -27,11 +27,19 @@
               "src/favicon.ico",
               "src/assets"
             ],
+            "allowedCommonJsDependencies": [
+              "datatables.net",
+              "jquery"
+           ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.js",
+              "node_modules/datatables.net/js/jquery.dataTables.js",
+              "node_modules/bootstrap/dist/js/bootstrap.js"
+            ]
           },
           "configurations": {
             "production": {
