@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder,FormGroup } from '@angular/forms';
 import { RegisterRequest } from '../../Dto/RegisterRequest';
 import { AuthService } from '../../services/auth-service.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -12,7 +13,7 @@ export class RegisterComponent implements OnInit {
   registerForm:FormGroup;
   registerRequest:RegisterRequest;
 
-  constructor(private formBuilder:FormBuilder,private authService:AuthService) {
+  constructor(private formBuilder:FormBuilder,private authService:AuthService,private router:Router) {
     this.registerForm=this.formBuilder.group({
       fullname:'',
       username:'',
@@ -48,6 +49,7 @@ export class RegisterComponent implements OnInit {
     .subscribe(data =>{
       console.log(data);
       console.log("Registration Successful");
+      this.router.navigate(['']);
     },
     error =>{
       console.log(error);

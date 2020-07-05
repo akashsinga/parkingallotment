@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { RegisterRequest } from '../Dto/RegisterRequest';
 import { Observable } from 'rxjs';
+import { LoginRequest } from '../Dto/LoginRequest';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,5 +14,9 @@ export class AuthService {
   registerUser(registerRequest:RegisterRequest):Observable<any>
   {
       return this.httpClient.post(this.url + "register", registerRequest);
+  }
+  loginUser(loginRequest:LoginRequest):Observable<any>
+  {
+    return this.httpClient.post(this.url + "login", loginRequest);
   }
 }
