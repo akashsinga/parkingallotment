@@ -12,12 +12,15 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DashboardComponent } from './components/admin/dashboard/dashboard.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { HeaderComponent } from './components/user/header/header.component';
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    DashboardComponent
+    DashboardComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +30,8 @@ import { DashboardComponent } from './components/admin/dashboard/dashboard.compo
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    HttpClientModule
+    HttpClientModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
