@@ -14,14 +14,17 @@ export class AuthService {
   registerUser(registerRequest: RegisterRequest): Observable<any> {
     return this.httpClient.post(this.url + 'register', registerRequest);
   }
+
   loginUser(loginRequest: LoginRequest): Observable<any> {
     return this.httpClient.post(this.url + 'login', loginRequest);
   }
+
   logoutUser() {
     console.log('cleared');
     localStorage.clear();
     this.router.navigate(['']);
   }
+
   checkUserType() {
     if (this.isLoggedIn()) {
       let user = JSON.parse(localStorage.getItem('user'));
@@ -31,10 +34,12 @@ export class AuthService {
       }
     }
   }
+
   isLoggedIn(): boolean {
     if (localStorage.getItem('user') === null) {
       this.router.navigate(['']);
     }
     return true;
   }
+
 }
