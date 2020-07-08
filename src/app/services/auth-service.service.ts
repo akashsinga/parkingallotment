@@ -42,4 +42,9 @@ export class AuthService {
     return true;
   }
 
+  checkUserExists(username:string):Observable<any>
+  {
+    console.log(this.url+"register/checkuser/"+username);
+    return this.httpClient.post(this.url+"register/checkuser",username);
+  }
 }
