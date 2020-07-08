@@ -39,6 +39,11 @@ export class AuthService {
     if (localStorage.getItem('user') === null) {
       this.router.navigate(['']);
     }
+    else
+    {
+      let user=JSON.parse(localStorage.getItem("user"));
+      this.router.navigate([user['type']+'/dashboard']);
+    }
     return true;
   }
 

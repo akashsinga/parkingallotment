@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
   loginRequest: LoginRequest;
 
   constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
+    this.authService.isLoggedIn();
     this.loginForm = this.formBuilder.group({
       username: '',
       password: ''

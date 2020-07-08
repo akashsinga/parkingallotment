@@ -5,6 +5,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { DashboardComponent as UserDashboard} from './components/user/dashboard/dashboard.component';
 import { DashboardComponent as AdminDashboard} from './components/admin/dashboard/dashboard.component';
 import { UserlayoutComponent } from './components/user/userlayout/userlayout.component';
+import { AdminlayoutComponent } from './components/admin/adminlayout/adminlayout.component';
 
 const routes: Routes = [
   //auth routes
@@ -20,8 +21,11 @@ const routes: Routes = [
   },
   //admin routes
   {
-    path:'admin/dashboard',
-    component:AdminDashboard
+    path:'admin',
+    component:AdminlayoutComponent,
+    children:[
+      {path:'dashboard',component:AdminDashboard}
+    ]
   }
 ];
 
