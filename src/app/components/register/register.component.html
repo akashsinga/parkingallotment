@@ -7,9 +7,9 @@
   <div class="row justify-content-center">
     <div class="col-md-8">
       <div class="card">
-        <div class="card-header card-header-primary">
+        <div class="card-header">
           <div class="card-title text-center">
-            <h2>Register</h2>
+            <div class="alert alert-primary"><h2>Getting Started ! <span class="register-title">Register Now</span></h2></div>
           </div>
         </div>
         <div class="card-body">
@@ -23,7 +23,7 @@
               <div class="col-md-6">
                 <mat-form-field class="full-width">
                   <input matInput [formControlName]="'fullname'" placeholder="Enter Full Name" type="text" required>
-                  <mat-error *ngIf="formErrors.fullname">{{formErrors.fullname}}</mat-error>
+                  <mat-error *ngIf="formErrors.fullname"><b>{{formErrors.fullname}}</b></mat-error>
                 </mat-form-field>
               </div>
             </div>
@@ -36,7 +36,7 @@
               <div class="col-md-6">
                 <mat-form-field class="full-width">
                   <input matInput [formControlName]="'username'" placeholder="Enter Username" type="text" required>
-                  <mat-error *ngIf="formErrors.username">{{formErrors.username}}</mat-error>
+                  <mat-error *ngIf="formErrors.username"><b>{{formErrors.username}}</b></mat-error>
                 </mat-form-field>
               </div>
             </div>
@@ -49,7 +49,7 @@
               <div class="col-md-6">
                 <mat-form-field class="full-width">
                   <input matInput [formControlName]="'mobile'" placeholder="Enter Mobile" type="text" pattern="[0-9]*" required>
-                  <mat-error *ngIf="formErrors.mobile">{{formErrors.mobile}}</mat-error>
+                  <mat-error *ngIf="formErrors.mobile"><b>{{formErrors.mobile}}</b></mat-error>
                 </mat-form-field>
               </div>
             </div>
@@ -62,7 +62,7 @@
               <div class="col-md-6">
                 <mat-form-field class="full-width">
                   <input matInput [formControlName]="'email'" placeholder="Enter Email" type="email" required>
-                  <mat-error *ngIf="formErrors.email">{{formErrors.email}}</mat-error>
+                  <mat-error *ngIf="formErrors.email"><b>{{formErrors.email}}</b></mat-error>
                 </mat-form-field>
               </div>
             </div>
@@ -75,7 +75,7 @@
               <div class="col-md-6">
                 <mat-form-field class="full-width">
                   <input matInput [formControlName]="'password'" placeholder="Enter Password" type="password" required>
-                  <mat-error *ngIf="formErrors.password">{{formErrors.password}}</mat-error>
+                  <mat-error *ngIf="formErrors.password"><b>{{formErrors.password}}</b></mat-error>
                 </mat-form-field>
               </div>
             </div>
@@ -88,7 +88,7 @@
               <div class="col-md-6">
                 <mat-form-field class="full-width">
                   <input matInput [formControlName]="'confirmpassword'" placeholder="Confirm Password" type="password" required>
-                  <mat-error *ngIf="formErrors.confirmpassword">{{formErrors.confirmpassword}}</mat-error>
+                  <mat-error *ngIf="formErrors.confirmpassword"><b>{{formErrors.confirmpassword}}</b></mat-error>
                 </mat-form-field>
               </div>
             </div>

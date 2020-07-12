@@ -1,6 +1,6 @@
 import { Component, OnInit,ElementRef,ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth-service.service';
+import { Location } from 'src/app/models/Location';
+import { UserService } from 'src/app/services/user.service';
 declare var $;
 @Component({
   selector: 'app-dashboard',
@@ -8,18 +8,18 @@ declare var $;
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-
-  @ViewChild('dataTable') table:ElementRef;
-  dataTable:any;
-  constructor()
+  
+  tableData:[];
+  constructor(private userService:UserService)
   {
+    this.userService.getLocations().subscribe((data)=>{
+      this.tableData=data;
+    });
   }
-   ngOnInit(){
-
+   ngOnInit():void{
    }
    ngAfterViewInit(){
-    this.dataTable=$(this.table.nativeElement);
-    this.dataTable.dataTable();
+    
    }
 
 }

@@ -4,7 +4,11 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-body">
-          <div class="alert alert-danger" *ngIf="tableData.length==0">Please Try Again Later</div>
+          <div class="ml-auto">
+            <a href="#" class="btn btn-success btn-sm" role="button" data-target="#addform">Add</a>
+          </div>
+          <input type="text" id="myInput" onkeyup="searchAreas()" placeholder="Search for Areas">
+          <div class="alert alert-danger" *ngIf="tableData?.length===0">Please Try Again Later</div>
           <div class="table-responsive">
             <table
               #dataTable
@@ -23,22 +27,13 @@
                     Location
                   </th>
                   <th>
-                    Cost Per Hour
+                    Cost per Hour
                   </th>
                   <th>
-                    Reserve Now
+                    Actions
                   </th>
                 </tr>
               </thead>
-              <tbody>
-                <tr *ngFor="let row of tableData">
-                  <td>{{row.slot}}</td>
-                  <td>{{row.area.area | titlecase}}</td>
-                  <td>{{row.area.location | titlecase}}</td>
-                  <td>{{row.price_per_hour}}</td>
-                  <td><a href="/user/reserve/{{row.id}}" class="btn btn-success btn-sm">Reserve</a></td>
-                </tr>
-              </tbody>
             </table>
           </div>
         </div>

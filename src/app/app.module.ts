@@ -19,7 +19,8 @@ import { DashboardComponent as UserDashboard } from './components/user/dashboard
 import { UserlayoutComponent } from './components/user/userlayout/userlayout.component';
 import { HeaderComponent as UserHeader} from './components/user/header/header.component';
 import { AdminlayoutComponent } from './components/admin/adminlayout/adminlayout.component';
-import { NavbarComponent } from './components/admin/navbar/navbar.component'
+import { NavbarComponent } from './components/admin/navbar/navbar.component';
+import { ManageparkingsComponent } from './components/admin/manageparkings/manageparkings.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +31,8 @@ import { NavbarComponent } from './components/admin/navbar/navbar.component'
     UserlayoutComponent,
     UserHeader,
     AdminlayoutComponent,
-    NavbarComponent
+    NavbarComponent,
+    ManageparkingsComponent
   ],
   imports: [
     BrowserModule,

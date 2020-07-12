@@ -1,1 +1,89 @@
-<p>dashboard works!</p>
+<div class="container-fluid">
+  <div class="alert alert-warning custom">Overview</div>
+  <div class="row">
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <div class="card card-stats">
+        <div class="card-header card-header-primary card-header-icon">
+          <div class="card-icon">
+            <i class="material-icons">person</i>
+          </div>
+          <h4 class="card-category">Users</h4>
+          <h3 class="card-title">{{ user_count }}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <div class="card card-stats">
+        <div class="card-header card-header-info card-header-icon">
+          <div class="card-icon">
+            <i class="material-icons">commute</i>
+          </div>
+          <h4 class="card-category">Parking Lots</h4>
+          <h3 class="card-title">{{ parkings_count }}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <div class="card card-stats">
+        <div class="card-header card-header-info card-header-icon">
+          <div class="card-icon">
+            <i class="material-icons">commute</i>
+          </div>
+          <h4 class="card-category">Locations</h4>
+          <h3 class="card-title">125</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+      <div class="card card-stats">
+        <div class="card-header card-header-info card-header-icon">
+          <div class="card-icon">
+            <i class="material-icons">commute</i>
+          </div>
+          <h4 class="card-category">Bookings</h4>
+          <h3 class="card-title">125</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="alert alert-warning">Latest Reservations</div>
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table
+              #dataTable
+              class="table table-striped table-bordered"
+              style="width: 100%;"
+            >
+              <thead class="text-primary">
+                <tr>
+                  <th>
+                    Reservee
+                  </th>
+                  <th>
+                    Slot
+                  </th>
+                  <th>
+                    Area
+                  </th>
+                  <th>
+                    Location
+                  </th>
+                  <th>
+                    Status
+                  </th>
+                  <th>
+                    View Details
+                  </th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
