@@ -4,6 +4,7 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-body">
+          <input type="text" id="myInput" onkeyup="searchAreas()" placeholder="Search for Areas">
           <div class="alert alert-danger" *ngIf="tableData.length==0">Please Try Again Later</div>
           <div class="table-responsive">
             <table

@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { DataTablesModule } from 'angular-datatables';
 import { MatTableModule } from '@angular/material/table';
+import { MatSelectModule } from '@angular/material/select';
 //component imports
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -20,7 +21,8 @@ import { UserlayoutComponent } from './components/user/userlayout/userlayout.com
 import { HeaderComponent as UserHeader} from './components/user/header/header.component';
 import { AdminlayoutComponent } from './components/admin/adminlayout/adminlayout.component';
 import { NavbarComponent } from './components/admin/navbar/navbar.component';
-import { ManageparkingsComponent } from './components/admin/manageparkings/manageparkings.component'
+import { ManageparkingsComponent } from './components/admin/manageparkings/manageparkings.component';
+import { ManageareasComponent } from './components/admin/manageareas/manageareas.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +34,8 @@ import { ManageparkingsComponent } from './components/admin/manageparkings/manag
     UserHeader,
     AdminlayoutComponent,
     NavbarComponent,
-    ManageparkingsComponent
+    ManageparkingsComponent,
+    ManageareasComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +48,8 @@ import { ManageparkingsComponent } from './components/admin/manageparkings/manag
     HttpClientModule,
     MatToolbarModule,
     DataTablesModule,
-    MatTableModule
+    MatTableModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

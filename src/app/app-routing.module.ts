@@ -7,6 +7,7 @@ import { DashboardComponent as AdminDashboard } from './components/admin/dashboa
 import { UserlayoutComponent } from './components/user/userlayout/userlayout.component';
 import { AdminlayoutComponent } from './components/admin/adminlayout/adminlayout.component';
 import { ManageparkingsComponent } from './components/admin/manageparkings/manageparkings.component';
+import { ManageareasComponent } from './components/admin/manageareas/manageareas.component';
 
 const routes: Routes = [
   //auth routes
@@ -30,6 +31,7 @@ const routes: Routes = [
     children: [
       { path: 'dashboard', component: AdminDashboard },
       { path: 'parkings/slots', component: ManageparkingsComponent },
+      { path: 'parkings/areas', component: ManageareasComponent },
     ],
   },
 ];

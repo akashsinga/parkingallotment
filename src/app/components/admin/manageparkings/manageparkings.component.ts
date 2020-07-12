@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from 'src/app/services/admin.service';
-
+import { FormGroup } from '@angular/forms';
+declare var $:any;
 @Component({
   selector: 'app-manageparkings',
   templateUrl: './manageparkings.component.html',
@@ -8,6 +9,7 @@ import { AdminService } from 'src/app/services/admin.service';
 })
 export class ManageparkingsComponent implements OnInit {
   tableData:[];
+  addForm:FormGroup;
   constructor(private adminService:AdminService) {
     this.adminService.getParkingLocations().subscribe((data)=>{
       this.tableData=data;
@@ -16,5 +18,9 @@ export class ManageparkingsComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  
+  onSubmit()
+  {
 
+  }
 }

@@ -5,7 +5,7 @@
       <div class="card">
         <div class="card-body">
           <div class="ml-auto">
-            <a href="#" class="btn btn-success btn-sm" role="button" data-target="#addform">Add</a>
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addForm">Add</button>
           </div>
           <input type="text" id="myInput" onkeyup="searchAreas()" placeholder="Search for Areas">
           <div class="alert alert-danger" *ngIf="tableData?.length===0">Please Try Again Later</div>
@@ -37,6 +37,75 @@
             </table>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="addForm">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add Parking Location</h4>
+      </div>
+      <div class="modal-body">
+        <form novalidate [formGroup]="addForm">
+          <div class="row">
+            <label
+              for="slot"
+              class="col-md-1 col-form-label text-md-right"
+              ><i class="material-icons">check_box_outline_blank</i></label
+            >
+            <div class="col-md-6">
+              <mat-form-field class="full-width">
+                <input class="form-control" [formControlName]="'slot'" placeholder="Enter Slot" type="text" required>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <label
+              for="price"
+              class="col-md-1 col-form-label text-md-right"
+              ><i class="material-icons">payment</i></label
+            >
+            <div class="col-md-6">
+              <mat-form-field class="full-width">
+                <input class="form-control" [formControlName]="'price'" placeholder="Enter Price Per Hour" type="text" required>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <label
+              for="username"
+              class="col-md-1 col-form-label text-md-right"
+              ><i class="material-icons">place</i></label
+            >
+            <div class="col-md-6">
+              <mat-form-field class="full-width">
+               <select class="custom-select full-width" [formControlName]="'area'">
+                <option selected disabled>Choose Area</option>
+               </select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <label
+              for="username"
+              class="col-md-1 col-form-label text-md-right"
+              ><i class="material-icons">place</i></label
+            >
+            <div class="col-md-6">
+              <mat-form-field class="full-width">
+               <select class="custom-select full-width" [formControlName]="'location'">
+                <option selected disabled>Choose Location</option>
+               </select>
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="onSubmit()">Submit</button>
+        <button type="button" class="btn btn-danger"data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

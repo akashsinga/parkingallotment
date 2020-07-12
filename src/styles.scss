@@ -584,7 +584,9 @@ a > code {
     max-width: 100%;
   }
 }
-
+.cdk-overlay-connected-position-bounding-box {
+  z-index: 99999 !important;
+}
 @media (min-width: 992px) {
   .col-lg {
     flex-basis: 0;
