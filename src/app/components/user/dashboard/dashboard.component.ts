@@ -1,5 +1,5 @@
 import { Component, OnInit,ElementRef,ViewChild } from '@angular/core';
-import { Location } from 'src/app/models/Location';
+import { location } from 'src/app/models/Location';
 import { UserService } from 'src/app/services/user.service';
 declare var $;
 @Component({

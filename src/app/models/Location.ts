@@ -1,6 +1,5 @@
 import { Area } from './Area';
-export class Location{
-    id:number;
+export class location{
     slot:number;
     area:Area;
     price_per_hour:number;

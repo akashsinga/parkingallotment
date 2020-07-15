@@ -1,6 +1,6 @@
 function searchAreas() {
   var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("search_input");
+  input = document.getElementById("myInput");
   filter = input.value.toUpperCase();
   table = document.getElementById("table");
   tr = table.getElementsByTagName("tr");

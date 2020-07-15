@@ -1,8 +1,10 @@
 <div class="container-fluid">
     <div class="row">
-      <div class="alert alert-primary">Parking Locations</div>
+      <div class="alert alert-primary">Parking Areas</div>
       <div class="col-md-12">
         <div class="card">
+          <div class="alert alert-danger" *ngIf="errMsg">{{errMsg}}</div>
+          <div class="alert alert-success" *ngIf="responseMsg">{{responseMsg}}</div>
           <div class="card-body">
             <div class="ml-auto">
               <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addForm">Add</button>
@@ -11,14 +13,14 @@
             <div class="alert alert-danger" *ngIf="tableData?.length===0">Please Try Again Later</div>
             <div class="table-responsive">
               <table
-                #dataTable
+                id="table"
                 class="table table-striped table-bordered"
                 style="width: 100%;"
               >
                 <thead class="text-primary">
                   <tr>
                     <th>
-                      Slot
+                      ID
                     </th>
                     <th>
                       Area
@@ -27,13 +29,22 @@
                       Location
                     </th>
                     <th>
-                      Cost per Hour
-                    </th>
-                    <th>
                       Actions
                     </th>
                   </tr>
                 </thead>
+                <tbody>
+                  <tr *ngFor="let area of tableData">
+                    <td>{{area.id}}</td>
+                    <td>{{area.area}}</td>
+                    <td>{{area.location}}</td>
+                    <td>
+                      <a href="#" role="button">Edit</a>
+                      |
+                      <a href="#" role="button">Delete</a>
+                    </td>
+                  </tr>
+                </tbody>
               </table>
             </div>
           </div>
@@ -45,7 +56,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h4 class="modal-title">Add Parking Location</h4>
+          <h4 class="modal-title">Add Parking Area</h4>
         </div>
         <div class="modal-body">
           <form novalidate [formGroup]="addForm">
@@ -53,59 +64,27 @@
               <label
                 for="slot"
                 class="col-md-1 col-form-label text-md-right"
-                ><i class="material-icons">check_box_outline_blank</i></label
+                ><i class="material-icons">place</i></label
               >
               <div class="col-md-6">
-                <mat-form-field class="full-width">
-                  <input class="form-control" [formControlName]="'slot'" placeholder="Enter Slot" type="text" required>
-                </mat-form-field>
+                  <input class="form-control" [formControlName]="'area'" placeholder="Enter Area" type="text" required>                
               </div>
             </div>
             <div class="row">
               <label
                 for="price"
                 class="col-md-1 col-form-label text-md-right"
-                ><i class="material-icons">payment</i></label
-              >
-              <div class="col-md-6">
-                <mat-form-field class="full-width">
-                  <input class="form-control" [formControlName]="'price'" placeholder="Enter Price Per Hour" type="text" required>
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="row">
-              <label
-                for="username"
-                class="col-md-1 col-form-label text-md-right"
                 ><i class="material-icons">place</i></label
               >
               <div class="col-md-6">
-                <mat-form-field class="full-width">
-                 <select class="custom-select full-width" [formControlName]="'area'">
-                  <option selected disabled>Choose Area</option>
-                 </select>
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="row">
-              <label
-                for="username"
-                class="col-md-1 col-form-label text-md-right"
-                ><i class="material-icons">place</i></label
-              >
-              <div class="col-md-6">
-                <mat-form-field class="full-width">
-                 <select class="custom-select full-width" [formControlName]="'location'">
-                  <option selected disabled>Choose Location</option>
-                 </select>
-                </mat-form-field>
+                  <input class="form-control" [formControlName]="'location'" placeholder="Enter Location" type="text" required>
               </div>
             </div>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-success" (click)="onSubmit()">Submit</button>
           <button type="button" class="btn btn-danger"data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-success" (click)="onSubmit()">Add</button>
         </div>
       </div>
     </div>

@@ -3,6 +3,8 @@
     <div class="alert alert-primary">Parking Locations</div>
     <div class="col-md-12">
       <div class="card">
+        <div class="alert alert-danger" *ngIf="errMsg">{{errMsg}}</div>
+          <div class="alert alert-success" *ngIf="responseMsg">{{responseMsg}}</div>
         <div class="card-body">
           <div class="ml-auto">
             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addForm">Add</button>
@@ -17,6 +19,9 @@
             >
               <thead class="text-primary">
                 <tr>
+                  <th>
+                    ID
+                  </th>
                   <th>
                     Slot
                   </th>
@@ -34,6 +39,19 @@
                   </th>
                 </tr>
               </thead>
+              <tbody>
+                <tr *ngFor="let location of tableData">
+                  <td>{{location.id}}</td>
+                  <td>{{location.slot}}</td>
+                  <td>{{location.area.area}}</td>
+                  <td>{{location.area.location}}</td>
+                  <td>{{location.price_per_hour}}</td>
+                  <td>
+                    <a href="#" role="button">Edit</a>|
+                    <a href="#" role="button">Delete</a>
+                  </td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </div>
@@ -56,9 +74,7 @@
               ><i class="material-icons">check_box_outline_blank</i></label
             >
             <div class="col-md-6">
-              <mat-form-field class="full-width">
                 <input class="form-control" [formControlName]="'slot'" placeholder="Enter Slot" type="text" required>
-              </mat-form-field>
             </div>
           </div>
           <div class="row">
@@ -68,9 +84,7 @@
               ><i class="material-icons">payment</i></label
             >
             <div class="col-md-6">
-              <mat-form-field class="full-width">
                 <input class="form-control" [formControlName]="'price'" placeholder="Enter Price Per Hour" type="text" required>
-              </mat-form-field>
             </div>
           </div>
           <div class="row">
@@ -80,11 +94,10 @@
               ><i class="material-icons">place</i></label
             >
             <div class="col-md-6">
-              <mat-form-field class="full-width">
                <select class="custom-select full-width" [formControlName]="'area'">
-                <option selected disabled>Choose Area</option>
+                <option hidden value=""  selected>Select Area </option>
+                <option *ngFor="let area of areas" value="{{area}}">{{area | titlecase}}</option>
                </select>
-              </mat-form-field>
             </div>
           </div>
           <div class="row">
@@ -94,18 +107,17 @@
               ><i class="material-icons">place</i></label
             >
             <div class="col-md-6">
-              <mat-form-field class="full-width">
                <select class="custom-select full-width" [formControlName]="'location'">
-                <option selected disabled>Choose Location</option>
+                <option hidden value="" selected>Select Location </option>
+                <option *ngFor="let location of locations" value="{{location}}">{{location | titlecase}}</option>
                </select>
-              </mat-form-field>
             </div>
           </div>
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" (click)="onSubmit()">Submit</button>
         <button type="button" class="btn btn-danger"data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success" (click)="onSubmit()">Add</button>
       </div>
     </div>
   </div>
