@@ -4,8 +4,15 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-body">
-          <input type="text" id="myInput" onkeyup="searchAreas()" placeholder="Search for Areas">
-          <div class="alert alert-danger" *ngIf="tableData.length==0">Please Try Again Later</div>
+          <input
+            type="text"
+            id="myInput"
+            onkeyup="searchAreas()"
+            placeholder="Search for Areas"
+          />
+          <div class="alert alert-danger" *ngIf="tableData.length == 0">
+            Please Try Again Later
+          </div>
           <div class="table-responsive">
             <table
               #dataTable
@@ -33,16 +40,72 @@
               </thead>
               <tbody>
                 <tr *ngFor="let row of tableData">
-                  <td>{{row.slot}}</td>
-                  <td>{{row.area.area | titlecase}}</td>
-                  <td>{{row.area.location | titlecase}}</td>
-                  <td>{{row.price_per_hour}}</td>
-                  <td><a href="/user/reserve/{{row.id}}" class="btn btn-success btn-sm">Reserve</a></td>
+                  <td>{{ row.slot }}</td>
+                  <td>{{ row.area.area | titlecase }}</td>
+                  <td>{{ row.area.location | titlecase }}</td>
+                  <td>{{ row.price_per_hour }}</td>
+                  <td>
+                    <a
+                      href="#"
+                      role="button"
+                      data-toggle="modal"
+                      data-target="#reserveForm"
+                      class="btn btn-success btn-sm"
+                      >Reserve</a
+                    >
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="reserveForm">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Reserve Parking</h4>
+      </div>
+      <div class="modal-body">
+        <form novalidate [formGroup]="reserveForm">
+          <div class="row">
+            <label for="slot" class="col-md-1 col-form-label text-md-right"
+              ><i class="material-icons">place</i></label
+            >
+            <div class="col-md-6">
+              <input
+                class="form-control"
+                [formControlName]="'area'"
+                placeholder="Enter Area"
+                type="text"
+                required
+              />
+            </div>
+          </div>
+          <div class="row">
+            <label for="price" class="col-md-1 col-form-label text-md-right"
+              ><i class="material-icons">place</i></label
+            >
+            <div class="col-md-6">
+              <input
+                class="form-control"
+                [formControlName]="'location'"
+                placeholder="Enter Location"
+                type="text"
+                required
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-success">Add</button>
       </div>
     </div>
   </div>

@@ -52,8 +52,6 @@ body {
   float:right;
   margin:10px;
 }
-.btn-sm
-{
-  height: auto;
-  width: auto;
+.table-btn{
+  margin-left:5px;
 }

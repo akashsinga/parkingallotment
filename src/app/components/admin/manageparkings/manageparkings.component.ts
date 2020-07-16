@@ -10,19 +10,16 @@ declare var $: any;
   styleUrls: ['./manageparkings.component.scss'],
 })
 export class ManageparkingsComponent implements OnInit {
+
   tableData: [];
   areas: [];
   locations: [];
   area: Area;
   location: location;
   addForm: FormGroup;
-
   errMsg: string;
   responseMsg: string;
-  constructor(
-    private adminService: AdminService,
-    private formBuilder: FormBuilder
-  ) {
+  constructor(private adminService: AdminService,private formBuilder: FormBuilder) {
     this.createForm();
     this.adminService.getParkingLocations().subscribe((data) => {
       this.tableData = data;
@@ -37,7 +34,8 @@ export class ManageparkingsComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   createForm(): void {
     this.addForm = this.formBuilder.group({
@@ -78,5 +76,27 @@ export class ManageparkingsComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  showAddForm():void
+  {
+    $('#addForm').modal('show');
+  }
+  
+  showEditForm():void{
+    var table=$('#table').DataTable();
+    table.on('click','.edit',function(){
+      var tr=$(this).closest('tr');
+      if($(tr).hasClass('child'))
+      {
+        tr=tr.prev('.parent');
+      }
+      var data=table.row(tr).data();
+      $('#slot').val(data[1]);
+      $('#area').val(data[2]);
+      $('#location').val(data[3]);
+      $('#price').val(data[4]);
+      $('#editForm').modal('show');
+    });
   }
 }

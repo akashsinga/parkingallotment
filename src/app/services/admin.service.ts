@@ -22,6 +22,11 @@ export class AdminService {
     return this.httpclient.get(this.url+"/dashboard/getParkingCount");
   }
 
+  getAreasCount():Observable<any>
+  {
+    return this.httpclient.get(this.url+"/dashboard/getAreasCount");
+  }
+
   getParkingLocations():Observable<any>
   {
     return this.httpclient.get(this.url+"/locations/get");
