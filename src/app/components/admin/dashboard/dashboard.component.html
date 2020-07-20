@@ -41,7 +41,7 @@
             <i class="material-icons">book</i>
           </div>
           <h4 class="card-category">Bookings</h4>
-          <h3 class="card-title">125</h3>
+          <h3 class="card-title">{{bookings_count}}</h3>
         </div>
       </div>
     </div>
@@ -60,7 +60,13 @@
               <thead class="text-primary">
                 <tr>
                   <th>
+                    Reservation ID
+                  </th>
+                  <th>
                     Reservee
+                  </th>
+                  <th>
+                    Booking Date
                   </th>
                   <th>
                     Slot
@@ -69,17 +75,38 @@
                     Area
                   </th>
                   <th>
-                    Location
-                  </th>
-                  <th>
                     Status
                   </th>
                   <th>
-                    View Details
+                    Actions
                   </th>
                 </tr>
               </thead>
-              <tbody></tbody>
+              <tbody>
+                <tr *ngFor="let booking of tableData">
+                  <td>
+                    {{booking.id}}
+                  </td>
+                  <td>
+                    {{booking.user.fullname}}
+                  </td>
+                  <td>
+                    {{booking.booking_date}}
+                  </td>
+                  <td>
+                    {{booking.location.slot}}
+                  </td>
+                  <td>
+                    {{booking.location.area.area}}
+                  </td>
+                  <td>
+                    {{booking.status}}
+                  </td>
+                  <td>
+                    <button class="btn btn-sm btn-info">View Details</button>
+                  </td>
+                </tr>
+              </tbody>
             </table>
           </div>
         </div>

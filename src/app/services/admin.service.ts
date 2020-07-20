@@ -12,19 +12,9 @@ export class AdminService {
   private url = 'http://localhost:8080/admin';
   constructor(private httpclient:HttpClient) {}
 
-  getUserCount():Observable<any>
+  getDashboardCounts():Observable<any>
   {
-    return this.httpclient.get(this.url+"/dashboard/getUserCount");
-  }
-
-  getParkingsCount():Observable<any>
-  {
-    return this.httpclient.get(this.url+"/dashboard/getParkingCount");
-  }
-
-  getAreasCount():Observable<any>
-  {
-    return this.httpclient.get(this.url+"/dashboard/getAreasCount");
+    return this.httpclient.get(this.url+"/dashboard/getCounts");
   }
 
   getParkingLocations():Observable<any>

@@ -32,6 +32,10 @@ export class AuthService {
       if (user['type'] === 'user') {
         this.router.navigate(['/user/dashboard']);
       }
+      else if(user['type']==='admin')
+      {
+        this.router.navigate(['/admin/dashboard']);
+      }
     }
   }
 

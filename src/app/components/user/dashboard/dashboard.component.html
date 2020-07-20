@@ -3,6 +3,9 @@
     <div class="alert alert-primary">Parking Locations</div>
     <div class="col-md-12">
       <div class="card">
+        <div class="alert alert-success" *ngIf="responseMsg">
+          {{responseMsg}}
+        </div>
         <div class="card-body">
           <input
             type="text"
@@ -10,12 +13,12 @@
             onkeyup="searchAreas()"
             placeholder="Search for Areas"
           />
-          <div class="alert alert-danger" *ngIf="tableData.length == 0">
+          <div class="alert alert-danger" *ngIf="tableData?.length == 0">
             Please Try Again Later
           </div>
           <div class="table-responsive">
             <table
-              #dataTable
+              id="table"
               class="table table-striped table-bordered"
               style="width: 100%;"
             >
@@ -45,14 +48,14 @@
                   <td>{{ row.area.location | titlecase }}</td>
                   <td>{{ row.price_per_hour }}</td>
                   <td>
-                    <a
+                    <button
                       href="#"
                       role="button"
-                      data-toggle="modal"
-                      data-target="#reserveForm"
-                      class="btn btn-success btn-sm"
-                      >Reserve</a
+                      (click)="showReserveForm()"
+                      class="btn btn-success btn-sm reserve"
                     >
+                      Reserve
+                    </button>
                   </td>
                 </tr>
               </tbody>
@@ -70,42 +73,84 @@
         <h4 class="modal-title">Reserve Parking</h4>
       </div>
       <div class="modal-body">
-        <form novalidate [formGroup]="reserveForm">
-          <div class="row">
-            <label for="slot" class="col-md-1 col-form-label text-md-right"
-              ><i class="material-icons">place</i></label
-            >
-            <div class="col-md-6">
-              <input
-                class="form-control"
-                [formControlName]="'area'"
-                placeholder="Enter Area"
-                type="text"
-                required
-              />
-            </div>
+        <form novalidate [formGroup]="reserveForm" class="form-horizontal">
+          <label class="col-form-label text-dark">Slot</label>
+          <div class="form-group">
+            <input
+              class="form-control"
+              [formControlName]="'slot'"
+              id="slot"
+              type="text"
+              placeholder="Enter Slot"
+              readonly
+            />
           </div>
-          <div class="row">
-            <label for="price" class="col-md-1 col-form-label text-md-right"
-              ><i class="material-icons">place</i></label
-            >
-            <div class="col-md-6">
-              <input
-                class="form-control"
-                [formControlName]="'location'"
-                placeholder="Enter Location"
-                type="text"
-                required
-              />
-            </div>
+          <label class="col-form-label text-dark">Price per Hour</label>
+          <div class="form-group">
+            <input
+              class="form-control"
+              [formControlName]="'price'"
+              id="price"
+              type="text"
+              placeholder="Enter Price"
+              readonly
+            />
+          </div>
+          <label class="col-form-label text-dark">Area</label>
+          <div class="form-group">
+            <input
+              class="form-control"
+              [formControlName]="'area'"
+              id="area"
+              type="text"
+              placeholder="Enter Area"
+              readonly
+            />
+          </div>
+          <label class="col-form-label text-dark">Location</label>
+          <div class="form-group">
+            <input
+              class="form-control"
+              [formControlName]="'location'"
+              id="location"
+              type="text"
+              placeholder="Enter Location"
+              readonly
+            />
+          </div>
+          <label class="col-form-label text-dark">From</label>
+          <div class="form-group">
+            <input
+              class="form-control"
+              [formControlName]="'fromdatetime'"
+              type="datetime-local"
+              id="fromdatetime"
+              placeholder="Enter From Date"
+            />
+            <mat-error *ngIf="formErrors.fromdatetime"><b>{{formErrors.fromdatetime}}</b></mat-error>
+          </div>
+          <label class="col-form-label text-dark">To</label>
+          <div class="form-group">
+            <input
+              class="form-control"
+              [formControlName]="'todatetime'"
+              id="todatetime"
+              type="datetime-local"
+              placeholder="Enter To Date"
+            />
           </div>
         </form>
+        <div class="alert alert-info" *ngIf="cost">
+          <label type="text" id="total-hours" class="text-dark"
+            ><b>Estimated Cost: ₹ {{cost}}</b></label
+          >
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal">
           Close
         </button>
-        <button type="button" class="btn btn-success">Add</button>
+        <button type="button" class="btn btn-success" [disabled]="reserveForm.invalid" (click)="onSubmit()">Reserve</button>
       </div>
     </div>
   </div>

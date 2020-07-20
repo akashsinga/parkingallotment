@@ -11,6 +11,7 @@ export class UserlayoutComponent implements OnInit {
 
   constructor(private router:Router,private authService:AuthService) {
     this.authService.isLoggedIn();
+    this.authService.checkUserType();
   }
 
   ngOnInit(): void {

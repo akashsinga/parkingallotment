@@ -12,8 +12,7 @@
             <button
               type="button"
               class="btn btn-success"
-              data-toggle="modal"
-              data-target="#addForm"
+              (click)="showAddForm()"
             >
               Add
             </button>
@@ -76,33 +75,29 @@
       </div>
       <div class="modal-body">
         <form novalidate [formGroup]="addForm">
-          <div class="row">
-            <label for="slot" class="col-md-1 col-form-label text-md-right"
-              ><i class="material-icons">place</i></label
-            >
-            <div class="col-md-6">
-              <input
-                class="form-control"
-                [formControlName]="'area'"
-                placeholder="Enter Area"
-                type="text"
-                required
-              />
-            </div>
+          <label for="username" class="col-form-label text-dark"
+            >Area</label
+          >
+          <div class="form-group">
+            <input
+              class="form-control"
+              [formControlName]="'area'"
+              placeholder="Enter Area"
+              type="text"
+              required
+            />
           </div>
-          <div class="row">
-            <label for="price" class="col-md-1 col-form-label text-md-right"
-              ><i class="material-icons">place</i></label
-            >
-            <div class="col-md-6">
-              <input
-                class="form-control"
-                [formControlName]="'location'"
-                placeholder="Enter Location"
-                type="text"
-                required
-              />
-            </div>
+          <label for="price" class="col-form-label text-dark"
+            >Location</label
+          >
+          <div class="form-group">
+            <input
+              class="form-control"
+              [formControlName]="'location'"
+              placeholder="Enter Location"
+              type="text"
+              required
+            />
           </div>
         </form>
       </div>

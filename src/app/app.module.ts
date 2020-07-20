@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { DataTablesModule } from 'angular-datatables';
 import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
+import { DlDateTimeDateModule, DlDateTimePickerModule } from 'angular-bootstrap-datetimepicker';
 //component imports
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -49,7 +50,9 @@ import { ManageareasComponent } from './components/admin/manageareas/manageareas
     MatToolbarModule,
     DataTablesModule,
     MatTableModule,
-    MatSelectModule
+    MatSelectModule,
+    DlDateTimeDateModule, 
+    DlDateTimePickerModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

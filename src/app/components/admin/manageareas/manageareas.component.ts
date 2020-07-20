@@ -27,6 +27,10 @@ export class ManageareasComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  showAddForm():void{
+    $('#addForm').modal('show');
+  }
+
   createForm() {
     this.addForm = this.formBuilder.group({
       area: '',

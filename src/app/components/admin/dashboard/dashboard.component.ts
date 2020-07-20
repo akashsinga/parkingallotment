@@ -11,13 +11,17 @@ export class DashboardComponent implements OnInit {
   user_count:number;
   parkings_count:number;
   locations_count:number;
+  bookings_count:number;
+  tableData:[];
   constructor(private router:Router,private authService:AuthService,private adminService:AdminService) {
     this.authService.checkUserType();
-    this.adminService.getUserCount().subscribe((data)=>{
-      this.user_count=data['response']
+    this.adminService.getDashboardCounts().subscribe((data)=>{
+      this.user_count=data['user_count'];
+      this.parkings_count=data['parkings_count'];
+      this.locations_count=data['locations_count'];
+      this.bookings_count=data['bookings_count'];
+      this.tableData=data['bookings'];
     });
-    this.adminService.getParkingsCount().subscribe((data)=>this.parkings_count=data['response']);
-    this.adminService.getAreasCount().subscribe((data)=>this.locations_count=data['response']);
   }
 
   ngOnInit(): void {
