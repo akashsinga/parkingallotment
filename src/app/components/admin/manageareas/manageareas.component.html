@@ -54,9 +54,8 @@
                   <td>{{ area.area }}</td>
                   <td>{{ area.location }}</td>
                   <td>
-                    <a href="#" role="button">Edit </a>
-                    |
-                    <a href="#" role="button">Delete</a>
+                    <button class="btn btn-primary btn-sm table-btn">Edit</button>
+                    <button class="btn btn-danger btn-sm table-btn">Delete</button>
                   </td>
                 </tr>
               </tbody>
@@ -68,6 +67,51 @@
   </div>
 </div>
 <div class="modal fade" id="addForm">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add Parking Area</h4>
+      </div>
+      <div class="modal-body">
+        <form novalidate [formGroup]="addForm">
+          <label for="username" class="col-form-label text-dark"
+            >Area</label
+          >
+          <div class="form-group">
+            <input
+              class="form-control"
+              [formControlName]="'area'"
+              placeholder="Enter Area"
+              type="text"
+              required
+            />
+          </div>
+          <label for="price" class="col-form-label text-dark"
+            >Location</label
+          >
+          <div class="form-group">
+            <input
+              class="form-control"
+              [formControlName]="'location'"
+              placeholder="Enter Location"
+              type="text"
+              required
+            />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-success" (click)="onSubmit()">
+          Add
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="editForm">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">

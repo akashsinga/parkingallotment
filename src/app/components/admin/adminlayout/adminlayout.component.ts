@@ -9,7 +9,10 @@ import { AuthService } from '../../../services/auth-service.service';
 export class AdminlayoutComponent implements OnInit {
 
   constructor(private router:Router,private authService:AuthService) {
-    this.authService.checkUserType();
+    if(!this.authService.isAdmin())
+    {
+      this.router.navigate(['user/dashboard']);
+    }
   }
 
   ngOnInit(): void {

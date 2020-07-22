@@ -34,8 +34,18 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css"
     />
   </head>
+  <div id="overlay">
+    <div class="cv-spinner">
+      <span class="spinner"></span>
+    </div>
+  </div>
   <body class="mat-typography">
     <app-root></app-root>
+    <footer class="page-footer font-small alert-secondary">
+      <div class="footer-copyright fluid text-center py-3">© 2020 Copyright:
+        <label>My Parking</label>
+      </div>
+    </footer>
     <script src="assets/js/customsearch.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script
@@ -44,5 +54,10 @@
     ></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript">
+      window.onload = function() {
+            $('#overlay').fadeOut(500);
+      }
+    </script>
   </body>
 </html>

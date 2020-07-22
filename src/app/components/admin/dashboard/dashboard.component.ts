@@ -14,7 +14,6 @@ export class DashboardComponent implements OnInit {
   bookings_count:number;
   tableData:[];
   constructor(private router:Router,private authService:AuthService,private adminService:AdminService) {
-    this.authService.checkUserType();
     this.adminService.getDashboardCounts().subscribe((data)=>{
       this.user_count=data['user_count'];
       this.parkings_count=data['parkings_count'];

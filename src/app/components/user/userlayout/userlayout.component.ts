@@ -10,8 +10,13 @@ import { AuthService } from 'src/app/services/auth-service.service';
 export class UserlayoutComponent implements OnInit {
 
   constructor(private router:Router,private authService:AuthService) {
-    this.authService.isLoggedIn();
-    this.authService.checkUserType();
+    if(this.authService.isLoggedIn()===true)
+    {
+      if(!this.authService.isUser())
+      {
+        this.router.navigate(['admin/dashboard']);
+      }
+    }
   }
 
   ngOnInit(): void {

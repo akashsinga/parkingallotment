@@ -23,7 +23,8 @@ import { HeaderComponent as UserHeader} from './components/user/header/header.co
 import { AdminlayoutComponent } from './components/admin/adminlayout/adminlayout.component';
 import { NavbarComponent } from './components/admin/navbar/navbar.component';
 import { ManageparkingsComponent } from './components/admin/manageparkings/manageparkings.component';
-import { ManageareasComponent } from './components/admin/manageareas/manageareas.component'
+import { ManageareasComponent } from './components/admin/manageareas/manageareas.component';
+import { MybookingsComponent } from './components/user/mybookings/mybookings.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +37,8 @@ import { ManageareasComponent } from './components/admin/manageareas/manageareas
     AdminlayoutComponent,
     NavbarComponent,
     ManageparkingsComponent,
-    ManageareasComponent
+    ManageareasComponent,
+    MybookingsComponent
   ],
   imports: [
     BrowserModule,

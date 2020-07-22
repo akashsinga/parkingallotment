@@ -25,23 +25,35 @@ export class AuthService {
     this.router.navigate(['']);
   }
 
-  checkUserType() {
-    if (this.isLoggedIn()) {
+  isUser():boolean
+  {
+    if(this.isLoggedIn())
+    {
       let user = JSON.parse(localStorage.getItem('user'));
-      console.log(user['type']);
-      if (user['type'] === 'user') {
-        this.router.navigate(['/user/dashboard']);
-      }
-      else if(user['type']==='admin')
+      if(user['type']==='user')
       {
-        this.router.navigate(['/admin/dashboard']);
+        return true;
       }
     }
+    return false;
+  }
+
+  isAdmin():boolean
+  {
+    if(this.isLoggedIn())
+    {
+      let user = JSON.parse(localStorage.getItem('user'));
+      if(user['type']==='admin')
+      {
+        return true;
+      }
+    }
+    return false;
   }
 
   isLoggedIn(): boolean {
     if (localStorage.getItem('user') === null) {
-      this.router.navigate(['']);
+      return false;
     }
     return true;
   }

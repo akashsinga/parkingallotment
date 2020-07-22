@@ -161,7 +161,4 @@ export class DashboardComponent implements OnInit {
     });
   }
 }
-function newFunction(data: any) {
-  console.log(data);
-}
 
