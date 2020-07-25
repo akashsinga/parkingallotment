@@ -5,5 +5,6 @@ export class ReserveParking{
     location:string;
     fromdatetime:string;
     todatetime:string;
+    paymentId:string;
     cost:number;
 }

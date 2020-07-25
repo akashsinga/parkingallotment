@@ -1,7 +1,8 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, NgZone } from '@angular/core';
 import { ReserveParking } from 'src/app/Dto/ReserveParking';
 import { UserService } from 'src/app/services/user.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { WindowRefService,ICustomWindow } from 'src/app/services/window-ref.service';
 declare var $;
 @Component({
   selector: 'app-dashboard',
@@ -16,6 +17,37 @@ export class DashboardComponent implements OnInit {
   cost: number;
   reservation:ReserveParking;
   responseMsg:string;
+  errMsg:string;
+
+  private window:ICustomWindow;
+  public rzp:any;
+  
+  public options:any={
+    key:'rzp_test_2lC3r77dmEDTFZ',
+    name:'MyParking',
+    description:'Parking',
+    amount:0,
+    prefill:{
+      name:'',
+      email:''
+    },
+    notes:{},
+    theme:{
+      color:'#3880FF'
+    },
+    handler:this.paymentHandler.bind(this),
+    modal:{
+        ondismiss:(()=>{
+          this.zone.run(()=>{
+            this.errMsg="Parking Reservation Failed";
+            setTimeout(() => {
+              $('#reserveForm').modal('hide');
+              window.location.reload();
+            }, 1000);
+          })
+        })
+    }
+  }
 
   formErrors = {
     fromdatetime: '',
@@ -34,13 +66,14 @@ export class DashboardComponent implements OnInit {
     },
   };
 
-  constructor(private userService: UserService,private formBuilder: FormBuilder) 
+  constructor(private userService: UserService,private zone:NgZone,private winRef:WindowRefService,private formBuilder: FormBuilder) 
   {
     this.userService.getLocations().subscribe((data) => {
       this.tableData = data;
     });
     this.createForm();
     this.initReservation();
+    this.window=this.winRef.NativeWindow;
   }
 
   initReservation():void{
@@ -51,7 +84,8 @@ export class DashboardComponent implements OnInit {
       slot:0,
       fromdatetime:'',
       todatetime:'',
-      cost:0
+      cost:0,
+      paymentId:''
     };
   }
 
@@ -106,10 +140,10 @@ export class DashboardComponent implements OnInit {
         tr = tr.prev('.parent');
       }
       var data = table.row(tr).data();
-      $('#slot').val(data[0]);
-      $('#area').val(data[1]);
-      $('#location').val(data[2]);
-      $('#price').val(data[3]);
+      $('#slot').val(data[1]);
+      $('#area').val(data[2]);
+      $('#location').val(data[3]);
+      $('#price').val(data[4]);
     });
     $('#reserveForm').modal('show');
   }
@@ -118,19 +152,20 @@ export class DashboardComponent implements OnInit {
     return (formgroup: FormGroup) => {
       const from = formgroup.controls[fromdate];
       const to = formgroup.controls[todate];
-      if (from.value > to.value) {
-        from.setErrors({ lessthan: true });
+      console.log(from.value);
+      console.log(to.value);
+      if (this.diff_hours(new Date(from.value),new Date())<2) {
+        from.setErrors({ invalid: true });
       }
-      else if(this.diff_hours(new Date(from.value),new Date())<2)
+      else if(from.value > to.value)
       { 
-        from.setErrors({invalid:true});
+        from.setErrors({lessthan:true});
       }
       else {
         from.setErrors(null);
         var hours = this.diff_hours(new Date(to.value), new Date(from.value));
         var cost = $('#price').val();
-        this.cost = cost * hours;
-        console.log(this.cost);
+        this.cost = Number((cost * hours).toFixed(2));
       }
     };
   }
@@ -141,24 +176,42 @@ export class DashboardComponent implements OnInit {
     return Math.abs(diff);
   }
 
-  onSubmit():void{
-    var id=JSON.parse(localStorage.getItem("user"))['id'];
-    
-    this.reservation.user_id=id;
-    this.reservation.area=(<HTMLInputElement>document.getElementById("area")).value;
-    this.reservation.location=(<HTMLInputElement>document.getElementById("location")).value;
-    this.reservation.slot=parseInt((<HTMLInputElement>document.getElementById("slot")).value);
-    this.reservation.fromdatetime=this.reserveForm.get('fromdatetime').value;
-    this.reservation.todatetime=this.reserveForm.get('todatetime').value;
-    this.reservation.cost=this.cost;
+  initPayment():void
+  {
+    let user=JSON.parse(localStorage.getItem('user'));
+    this.options.prefill.name=user['username'];
+    this.options.amount=this.cost*100;
+    this.rzp=new this.winRef.NativeWindow['Razorpay'](this.options);
+    this.rzp.open();
+  }
 
-    console.log(this.reservation);
-    this.userService.reserveParking(this.reservation).subscribe((data)=>{
-      console.log("Request Sent");
-      this.responseMsg="Parking Successfully Booked";
-    },(error)=>{
-      console.log(error);
+  paymentHandler(res:any)
+  {
+    $('#overlay').show();
+    this.zone.run(()=>{
+      console.log(res);
+      var id=JSON.parse(localStorage.getItem("user"))['id'];
+      this.reservation.user_id=id;
+      this.reservation.area=(<HTMLInputElement>document.getElementById("area")).value;
+      this.reservation.location=(<HTMLInputElement>document.getElementById("location")).value;
+      this.reservation.slot=parseInt((<HTMLInputElement>document.getElementById("slot")).value);
+      this.reservation.fromdatetime=this.reserveForm.get('fromdatetime').value;
+      this.reservation.todatetime=this.reserveForm.get('todatetime').value;
+      this.reservation.cost=this.cost;
+      this.reservation.paymentId=res['razorpay_payment_id'];
+      console.log(this.reservation);
+      this.userService.reserveParking(this.reservation).subscribe((data)=>{
+        console.log("Request Sent");
+        this.responseMsg="Parking Successfully Booked";
+        setTimeout(() => {
+          $('#reserveForm').modal('hide');
+          window.location.reload();
+        }, 1000);
+      },(error)=>{
+        console.log(error);
+      });
     });
+    $('#overlay').fadeOut(500);
   }
 }
 

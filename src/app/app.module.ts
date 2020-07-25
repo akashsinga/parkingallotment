@@ -24,7 +24,7 @@ import { AdminlayoutComponent } from './components/admin/adminlayout/adminlayout
 import { NavbarComponent } from './components/admin/navbar/navbar.component';
 import { ManageparkingsComponent } from './components/admin/manageparkings/manageparkings.component';
 import { ManageareasComponent } from './components/admin/manageareas/manageareas.component';
-import { MybookingsComponent } from './components/user/mybookings/mybookings.component'
+import { MybookingsComponent } from './components/user/mybookings/mybookings.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +38,7 @@ import { MybookingsComponent } from './components/user/mybookings/mybookings.com
     NavbarComponent,
     ManageparkingsComponent,
     ManageareasComponent,
-    MybookingsComponent
+    MybookingsComponent,
   ],
   imports: [
     BrowserModule,

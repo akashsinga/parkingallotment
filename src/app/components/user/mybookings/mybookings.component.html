@@ -5,7 +5,7 @@
       <div class="card">
         <div class="card-body">
           <div class="alert alert-danger" *ngIf="tableData?.length == 0">
-            Please Try Again Later
+            You Haven't made any Reservations Yet ! 
           </div>
           <div class="table-responsive">
             <table
@@ -62,13 +62,13 @@
                     {{ booking.location.area.location }}
                   </td>
                   <td>
-                    {{ booking.cost }}
+                    ₹ {{ booking.cost }}
                   </td>
                   <td>
-                    <button class="btn btn-sm btn-primary table-btn">
+                    <button class="btn btn-sm btn-primary table-btn" (click)="showDetails(booking)">
                       View Details
                     </button>
-                    <button class="btn btn-sm btn-info table-btn">
+                    <button class="btn btn-sm btn-info table-btn" (click)="downloadReceipt(booking)">
                       Download Receipt
                     </button>
                   </td>
@@ -77,6 +77,58 @@
             </table>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="booking_details">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Booking Details</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <label class="label-head">Booking ID:</label>
+          <label id="id">1</label>
+        </div>
+        <div class="row">
+          <label class="label-head">Booking Date:</label>
+          <label id="booking_date"></label>
+        </div>
+        <div class="row">
+          <label class="label-head">Payment ID:</label>
+          <label id="payment_id"></label>
+        </div>
+        <div class="row">
+          <label class="label-head">Slot:</label>
+          <label id="slot"></label>
+        </div>
+        <div class="row">
+          <label class="label-head">Location:</label>
+          <label id="location"></label>
+        </div>
+        <div class="row">
+          <label class="label-head">Area:</label>
+          <label id="area"></label>
+        </div>
+        <div class="row">
+          <label class="label-head">From:</label>
+          <label id="from_datetime"></label>
+        </div>
+        <div class="row">
+          <label class="label-head">To:</label>
+          <label id="to_datetime"></label>
+        </div>
+        <div class="row">
+          <label class="label-head">Cost:</label>
+          <label id="cost">₹</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Close
+        </button>
       </div>
     </div>
   </div>
