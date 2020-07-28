@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AddArea } from '../Dto/AddArea';
-import { location } from '../models/Location';
+import { ParkingLocation } from '../models/Location';
+import { Area } from '../models/Area';
 
 @Injectable({
   providedIn: 'root'
@@ -37,13 +37,28 @@ export class AdminService {
     return this.httpclient.get(this.url+"/parkings/locations/get");
   }
 
-  addParkingArea(area:AddArea):Observable<any>
+  addParkingArea(area:Area):Observable<any>
   {
     return this.httpclient.post(this.url+"/parkings/areas/add",area);
   }
 
-  addParkingLocation(location:location):Observable<any>
+  addParkingLocation(location:ParkingLocation):Observable<any>
   {
     return this.httpclient.post(this.url+"/parkings/add",location);
+  }
+  
+  editParkingLocation(location:ParkingLocation,id:number):Observable<any>
+  {
+    return this.httpclient.post(this.url+"/parkings/edit/"+id,location);
+  }
+
+  editParkingArea(area:Area,id:number):Observable<any>
+  {
+    return this.httpclient.post(this.url+"/parkings/areas/edit/"+id,area);
+  }
+
+  deleteParkingLot(id:number):Observable<any>
+  {
+    return this.httpclient.get(this.url+"/parkings/delete/"+id);
   }
 }

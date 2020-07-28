@@ -4,6 +4,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -11,7 +12,6 @@ import { MatInputModule } from '@angular/material/input';
 import { DataTablesModule } from 'angular-datatables';
 import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
-import { DlDateTimeDateModule, DlDateTimePickerModule } from 'angular-bootstrap-datetimepicker';
 //component imports
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -25,6 +25,7 @@ import { NavbarComponent } from './components/admin/navbar/navbar.component';
 import { ManageparkingsComponent } from './components/admin/manageparkings/manageparkings.component';
 import { ManageareasComponent } from './components/admin/manageareas/manageareas.component';
 import { MybookingsComponent } from './components/user/mybookings/mybookings.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,8 +54,11 @@ import { MybookingsComponent } from './components/user/mybookings/mybookings.com
     DataTablesModule,
     MatTableModule,
     MatSelectModule,
-    DlDateTimeDateModule, 
-    DlDateTimePickerModule,
+    ToastrModule.forRoot({
+      timeOut:3000,
+      positionClass:'toast-top-right',
+      preventDuplicates:true
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

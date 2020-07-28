@@ -56,7 +56,6 @@ export class MybookingsComponent implements OnInit {
     doc.text('Booking ID : '+booking.id,16,35);
     doc.text('Payment ID : '+booking.payment_Id,16,40);
     doc.text('Booking Date : '+booking.booking_date,16,45);
-    doc.text('Receipt #: '+1,170,35);
     doc.text('Parking Slot : '+booking.location.slot,40,60);
     doc.text('Parking Area : '+booking.location.area.area,40,65);
     doc.text('Parking Location : '+booking.location.area.location,40,70);
@@ -66,7 +65,7 @@ export class MybookingsComponent implements OnInit {
     doc.text('To : ',40,90);
     doc.text(booking.todatetime,130,90);
     doc.text('Duration : ',40,95);
-    doc.text(''+this.diff_hours(new Date(booking.fromdatetime),new Date(booking.todatetime))+' hours',130,95);
+    doc.text(''+this.diff_hours(new Date(booking.fromdatetime),new Date(booking.todatetime))+' hour(s)',130,95);
     doc.line(35,105,175,105,'F');
     doc.setFontSize(15);
     doc.text('Total Cost : ',40,115);

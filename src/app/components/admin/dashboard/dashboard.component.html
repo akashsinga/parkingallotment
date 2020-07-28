@@ -103,13 +103,69 @@
                     {{booking.status}}
                   </td>
                   <td>
-                    <button class="btn btn-sm btn-info">View Details</button>
+                    <button class="btn btn-sm btn-info" (click)="showDetails(booking)">View Details</button>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="booking_details">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Booking Details</h4>
+      </div>
+      <div class="modal-body">
+        <div class="modal-row">
+          <label class="label-head">Booking ID:</label>
+          <label id="id">1</label>
+        </div>
+        <div class="modal-row">
+          <label class="label-head">Booking Date:</label>
+          <label id="booking_date"></label>
+        </div>
+        <div class="modal-row">
+          <label class="label-head">Reservee:</label>
+          <label id="reservee"></label>
+        </div>
+        <div class="modal-row">
+          <label class="label-head">Payment ID:</label>
+          <label id="payment_id"></label>
+        </div>
+        <div class="modal-row">
+          <label class="label-head">Slot:</label>
+          <label id="slot"></label>
+        </div>
+        <div class="modal-row">
+          <label class="label-head">Location:</label>
+          <label id="location"></label>
+        </div>
+        <div class="modal-row">
+          <label class="label-head">Area:</label>
+          <label id="area"></label>
+        </div>
+        <div class="modal-row">
+          <label class="label-head">From:</label>
+          <label id="from_datetime"></label>
+        </div>
+        <div class="modal-row">
+          <label class="label-head">To:</label>
+          <label id="to_datetime"></label>
+        </div>
+        <div class="modal-row">
+          <label class="label-head">Cost:</label>
+          <label id="cost">₹</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Close
+        </button>
       </div>
     </div>
   </div>

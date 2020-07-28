@@ -3,15 +3,13 @@
     <div class="alert alert-primary">Parking Locations</div>
     <div class="col-md-12">
       <div class="card">
-        <div class="alert alert-danger" *ngIf="errMsg">{{errMsg}}</div>
-          <div class="alert alert-success" *ngIf="responseMsg">{{responseMsg}}</div>
         <div class="card-body">
           <div class="ml-auto">
             <button type="button" class="btn btn-success" (click)="showAddForm()">Add</button>
           </div>
           <div class="table-responsive">
             <hr>
-            <div class="alert alert-danger" *ngIf="tableData?.length===0">Please Try Again Later</div>
+            <div class="alert alert-danger" *ngIf="tableData?.length===0">No Existing Parking Lots</div>
             <table
               id="table"
               class="table table-striped table-bordered"
@@ -47,8 +45,8 @@
                   <td>{{location.area.location}}</td>
                   <td>{{location.price_per_hour}}</td>
                   <td>
-                    <button class="btn btn-primary btn-sm table-btn edit" (click)="showEditForm()">Edit </button>
-                    <button class="btn btn-danger btn-sm table-btn delete">Delete</button>
+                    <button class="btn btn-primary btn-sm table-btn edit" (click)="showEditForm(location)">Edit </button>
+                    <button class="btn btn-danger btn-sm table-btn delete" (click)="deleteParkingLot(location)">Delete</button>
                   </td>
                 </tr>
               </tbody>
@@ -59,14 +57,15 @@
     </div>
   </div>
 </div>
-<div class="modal fade" id="addForm">
+<div class="modal fade" id="lot-form">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="form-head">Add Parking Location</h4>
+        <h4 class="modal-title" id="form-head">Add Parking Lot</h4>
       </div>
       <div class="modal-body">
-        <form novalidate [formGroup]="addForm">
+        <form novalidate [formGroup]="lot_form">
+          <input class="form-control" [formControlName]="'id'" type="hidden">
             <label for="slot" class="col-form-label text-dark">
               Slot</label>
             <div class="form-group">
@@ -106,59 +105,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger"data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-success" (click)="onSubmit()">Submit</button>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="modal fade" id="editForm">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title" id="form-head">Edit Parking Location</h4>
-      </div>
-      <div class="modal-body">
-        <form novalidate [formGroup]="addForm">
-            <label for="slot" class="col-form-label text-dark">
-              Slot</label>
-            <div class="form-group">
-                <input class="form-control" [formControlName]="'slot'" placeholder="Enter Slot" id="slot" type="text" required>
-            </div>
-            <label
-              for="price"
-              class="col-form-label text-dark"
-              >Price per Hour</label
-            >
-            <div class="form-group">
-                <input class="form-control" [formControlName]="'price'" id="price" placeholder="Enter Price Per Hour" type="text" required>
-            </div>
-            <label
-              for="username"
-              class="col-form-label text-dark"
-              >Area</label
-            >
-            <div class="form-group">
-               <select class="custom-select full-width" id="area" [formControlName]="'area'">
-                <option hidden value=""  selected>Select Area </option>
-                <option *ngFor="let area of areas" value="{{area}}">{{area | titlecase}}</option>
-               </select>
-            </div>
-            <label
-              for="username"
-              class="col-form-label text-dark"
-              >Location</label
-            >
-            <div class="form-group">
-               <select class="custom-select full-width" id="location" [formControlName]="'location'">
-                <option hidden value="" selected>Select Location </option>
-                <option *ngFor="let location of locations" value="{{location}}">{{location | titlecase}}</option>
-               </select>
-            </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger"data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-success" (click)="onSubmit()">Submit</button>
+        <button type="button" class="btn btn-success" (click)="isAdd?onSubmit():editParkingLot()">Submit</button>
       </div>
     </div>
   </div>

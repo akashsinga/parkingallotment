@@ -4,12 +4,14 @@ import { RegisterRequest } from '../../Dto/RegisterRequest';
 import { AuthService } from '../../services/auth-service.service';
 import { Router } from '@angular/router';
 import { uniqueUsernameValidator } from '../../shared/unique-username-validator.directive';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
+
   registerForm: FormGroup;
   registerRequest: RegisterRequest;
   errMess: string;
@@ -49,15 +51,13 @@ export class RegisterComponent implements OnInit {
       minlength: 'Password must be at least 6 characters long.',
     },
     confirmpassword: {
+      required: 'Confirm Password is required',
       mustMatch: 'Password and Confirm Password doesnot match',
     },
   };
 
-  constructor(
-    private formBuilder: FormBuilder,
-    public authService: AuthService,
-    private router: Router
-  ) {
+  constructor(private formBuilder: FormBuilder,public authService: AuthService,private router: Router,private toaster:ToastrService) 
+  {
     this.createForm();
     this.registerRequest = {
       fullname: '',
@@ -116,7 +116,6 @@ export class RegisterComponent implements OnInit {
     const form = this.registerForm;
     for (const field in this.formErrors) {
       if (this.formErrors.hasOwnProperty(field)) {
-        // clear previous error message (if any)
         this.formErrors[field] = '';
         const control = form.get(field);
         if (control && control.dirty && !control.valid) {
@@ -136,10 +135,8 @@ export class RegisterComponent implements OnInit {
       const control = formGroup.controls[controlName];
       const matchingControl = formGroup.controls[matchingControlName];
       if (matchingControl.errors && !matchingControl.errors.mustMatch) {
-        // return if another validator has already found an error on the matchingControl
         return;
       }
-      // set error on matchingControl if validation fails
       if (control.value !== matchingControl.value) {
         matchingControl.setErrors({ mustMatch: true });
       } else {
@@ -148,24 +145,26 @@ export class RegisterComponent implements OnInit {
     };
   }
 
-  onSubmit() {
-    this.registerRequest.fullname = this.registerForm.get('fullname').value;
-    this.registerRequest.username = this.registerForm.get('username').value;
-    this.registerRequest.mobile = this.registerForm.get('mobile').value;
-    this.registerRequest.email = this.registerForm.get('email').value;
-    this.registerRequest.password = this.registerForm.get('password').value;
-    this.registerRequest.type = 'user';
-
+  onSubmit() 
+  {
+    var fullname = this.registerForm.get('fullname').value;
+    var username = this.registerForm.get('username').value;
+    var mobile = this.registerForm.get('mobile').value;
+    var email = this.registerForm.get('email').value;
+    var password = this.registerForm.get('password').value;
+    this.registerRequest=new RegisterRequest(fullname,username,mobile,email,password,'user');
     this.authService.registerUser(this.registerRequest).subscribe(
       (data) => {
         console.log(data);
-        console.log('Registration Successful');
-        this.router.navigate(['']);
+        this.toaster.success("Registration Successful");
+        setTimeout(()=>{
+          this.toaster.info("Redirecting to Login Page");
+          this.router.navigate(['']);
+        },3000)
       },
       (error) => {
         console.log(error);
-        this.errMess = 'Registration Failed';
-        console.log('Registration Failed');
+        this.toaster.error('Registration Failed');
       }
     );
   }

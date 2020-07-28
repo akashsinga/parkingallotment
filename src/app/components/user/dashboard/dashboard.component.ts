@@ -1,8 +1,11 @@
-import { Component, OnInit, ElementRef, ViewChild, NgZone } from '@angular/core';
+import {Component,OnInit,NgZone} from '@angular/core';
 import { ReserveParking } from 'src/app/Dto/ReserveParking';
 import { UserService } from 'src/app/services/user.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { WindowRefService,ICustomWindow } from 'src/app/services/window-ref.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {WindowRefService,ICustomWindow} from 'src/app/services/window-ref.service';
+import { CheckAvailability } from 'src/app/Dto/CheckAvailability';
+import { ToastrService } from 'ngx-toastr';
+
 declare var $;
 @Component({
   selector: 'app-dashboard',
@@ -10,44 +13,44 @@ declare var $;
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-
   tableData: [];
-  reservedata:[];
+  reservedata: [];
   reserveForm: FormGroup;
   cost: number;
-  reservation:ReserveParking;
-  responseMsg:string;
-  errMsg:string;
+  reservation: ReserveParking;
+  responseMsg: string;
+  errMsg: string;
+  check: CheckAvailability;
 
-  private window:ICustomWindow;
-  public rzp:any;
-  
-  public options:any={
-    key:'rzp_test_2lC3r77dmEDTFZ',
-    name:'MyParking',
-    description:'Parking',
-    amount:0,
-    prefill:{
-      name:'',
-      email:''
+  private window: ICustomWindow;
+  public rzp: any;
+
+  public options: any = {
+    key: 'rzp_test_2lC3r77dmEDTFZ',
+    name: 'MyParking',
+    description: 'Parking',
+    amount: 0,
+    prefill: {
+      name: '',
+      email: '',
     },
-    notes:{},
-    theme:{
-      color:'#3880FF'
+    notes: {},
+    theme: {
+      color: '#3880FF',
     },
-    handler:this.paymentHandler.bind(this),
-    modal:{
-        ondismiss:(()=>{
-          this.zone.run(()=>{
-            this.errMsg="Parking Reservation Failed";
-            setTimeout(() => {
-              $('#reserveForm').modal('hide');
-              window.location.reload();
-            }, 1000);
-          })
-        })
-    }
-  }
+    handler: this.paymentHandler.bind(this),
+    modal: {
+      ondismiss: () => {
+        this.zone.run(() => {
+          this.errMsg = 'Parking Reservation Failed';
+          setTimeout(() => {
+            $('#reserveForm').modal('hide');
+            window.location.reload();
+          }, 1000);
+        });
+      },
+    },
+  };
 
   formErrors = {
     fromdatetime: '',
@@ -59,6 +62,7 @@ export class DashboardComponent implements OnInit {
       required: 'From Date Time is required',
       lessthan: 'From Date Time should be less than To Date Time',
       invalid: 'From Date Time should be 2 hours later from now',
+      unavailable: 'Parking Slot for this Time Frame is not Available',
     },
     todatetime: {
       lessthan: 'To Date Time should be greater than From Date Time',
@@ -66,26 +70,31 @@ export class DashboardComponent implements OnInit {
     },
   };
 
-  constructor(private userService: UserService,private zone:NgZone,private winRef:WindowRefService,private formBuilder: FormBuilder) 
-  {
+  constructor(private userService: UserService,private zone: NgZone,private winRef: WindowRefService,private formBuilder: FormBuilder,private toaster:ToastrService) {
     this.userService.getLocations().subscribe((data) => {
       this.tableData = data;
     });
     this.createForm();
     this.initReservation();
-    this.window=this.winRef.NativeWindow;
+    this.window = this.winRef.NativeWindow;
   }
 
-  initReservation():void{
-    this.reservation={
-      user_id:0,
-      area:'',
-      location:'',
-      slot:0,
-      fromdatetime:'',
-      todatetime:'',
-      cost:0,
-      paymentId:''
+  initReservation(): void {
+    this.reservation = {
+      user_id: 0,
+      area: '',
+      location: '',
+      slot: 0,
+      fromdatetime: '',
+      todatetime: '',
+      cost: 0,
+      paymentId: '',
+    };
+    this.check = {
+      slot: 0,
+      area: '',
+      location: '',
+      fromdatetime: '',
     };
   }
 
@@ -98,12 +107,14 @@ export class DashboardComponent implements OnInit {
       {
         slot: '',
         price: '',
-        fromdatetime: '',
-        todatetime: '',
+        fromdatetime: ['', Validators.required],
+        todatetime: ['', Validators.required],
         area: '',
-        location:'',
+        location: '',
       },
-      { validator: this.checkTimeDifference('fromdatetime', 'todatetime') }
+      {
+        validator: [this.checkTimeDifference('fromdatetime', 'todatetime')],
+      }
     );
     this.reserveForm.valueChanges.subscribe((data) =>
       this.onValueChanged(data)
@@ -154,14 +165,16 @@ export class DashboardComponent implements OnInit {
       const to = formgroup.controls[todate];
       console.log(from.value);
       console.log(to.value);
-      if (this.diff_hours(new Date(from.value),new Date())<2) {
+      if (this.diff_hours(new Date(from.value), new Date()) < 2) {
         from.setErrors({ invalid: true });
       }
-      else if(from.value > to.value)
-      { 
-        from.setErrors({lessthan:true});
-      }
-      else {
+      // else if(this.checkAvailability(from.value))
+      // {
+      //   from.setErrors({ unavailable: true });
+      // } 
+      else if (from.value > to.value) {
+        from.setErrors({ lessthan: true });
+      } else {
         from.setErrors(null);
         var hours = this.diff_hours(new Date(to.value), new Date(from.value));
         var cost = $('#price').val();
@@ -176,42 +189,63 @@ export class DashboardComponent implements OnInit {
     return Math.abs(diff);
   }
 
-  initPayment():void
-  {
-    let user=JSON.parse(localStorage.getItem('user'));
-    this.options.prefill.name=user['username'];
-    this.options.amount=this.cost*100;
-    this.rzp=new this.winRef.NativeWindow['Razorpay'](this.options);
+  initPayment(): void {
+    let user = JSON.parse(localStorage.getItem('user'));
+    this.options.prefill.name = user['username'];
+    this.options.amount = this.cost * 100;
+    this.rzp = new this.winRef.NativeWindow['Razorpay'](this.options);
     this.rzp.open();
   }
 
-  paymentHandler(res:any)
-  {
+  paymentHandler(res: any) {
     $('#overlay').show();
-    this.zone.run(()=>{
+    this.zone.run(() => {
       console.log(res);
-      var id=JSON.parse(localStorage.getItem("user"))['id'];
-      this.reservation.user_id=id;
-      this.reservation.area=(<HTMLInputElement>document.getElementById("area")).value;
-      this.reservation.location=(<HTMLInputElement>document.getElementById("location")).value;
-      this.reservation.slot=parseInt((<HTMLInputElement>document.getElementById("slot")).value);
-      this.reservation.fromdatetime=this.reserveForm.get('fromdatetime').value;
-      this.reservation.todatetime=this.reserveForm.get('todatetime').value;
-      this.reservation.cost=this.cost;
-      this.reservation.paymentId=res['razorpay_payment_id'];
+      var id = JSON.parse(localStorage.getItem('user'))['id'];
+      var area = (<HTMLInputElement>(document.getElementById('area'))).value;
+      var location = (<HTMLInputElement>(document.getElementById('location'))).value;
+      var slot = parseInt((<HTMLInputElement>document.getElementById('slot')).value);
+      var fromdatetime = this.reserveForm.get('fromdatetime').value;
+      var todatetime = this.reserveForm.get('todatetime').value;
+      var cost = this.cost;
+      var paymentId = res['razorpay_payment_id'];
+      this.reservation=new ReserveParking(id,slot,area,location,fromdatetime,todatetime,paymentId,cost);
       console.log(this.reservation);
-      this.userService.reserveParking(this.reservation).subscribe((data)=>{
-        console.log("Request Sent");
-        this.responseMsg="Parking Successfully Booked";
-        setTimeout(() => {
-          $('#reserveForm').modal('hide');
-          window.location.reload();
-        }, 1000);
-      },(error)=>{
-        console.log(error);
-      });
+      this.userService.reserveParking(this.reservation).subscribe(
+        (data) => {
+          console.log('Request Sent');
+          this.toaster.success('Parking Successfully Booked');
+          setTimeout(() => {
+            $('#reserveForm').modal('hide');
+            window.location.reload();
+          }, 1000);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     });
     $('#overlay').fadeOut(500);
   }
-}
 
+  checkAvailability(fromdatetime:any) {
+    console.log(fromdatetime);
+    if(fromdatetime!=null)
+    {
+      this.check.slot = parseInt(
+        (<HTMLInputElement>document.getElementById('slot')).value
+      );
+      this.check.area = (<HTMLInputElement>document.getElementById('area')).value;
+      this.check.location = (<HTMLInputElement>(
+        document.getElementById('location')
+      )).value;
+      this.check.fromdatetime = fromdatetime;
+      console.log(this.check);
+      var Available;
+      this.userService.isAvailable(this.check).subscribe((data) => {
+        Available=data['response'];
+      });
+      return Available==="true"?true:false;
+    }
+  }
+}

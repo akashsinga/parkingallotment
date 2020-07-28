@@ -6,11 +6,11 @@
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
     <link
-      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Mulish&display=swap"
       rel="stylesheet"
     />
-    <link href="https://fonts.googleapis.com/css2?family=Mulish&display=swap" rel="stylesheet">
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
@@ -30,6 +30,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.7.14/css/bootstrap-datetimepicker.min.css"
     />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
   </head>
   <div id="overlay">
     <div class="cv-spinner">
@@ -39,23 +40,23 @@
   <body class="mat-typography">
     <app-root></app-root>
     <footer class="page-footer font-small alert-secondary">
-      <div class="footer-copyright fluid text-center py-3">© 2020 Copyright:
+      <div class="footer-copyright fluid text-center py-3">
+        © 2020 Copyright:
         <label>My Parking</label>
       </div>
     </footer>
-    <script src="assets/js/customsearch.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script
       type="text/javascript"
       src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"
     ></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script type="text/javascript">
-      window.onload = function() {
-            $('#overlay').fadeOut(500);
-      }
+      window.onload = function () {
+        $("#overlay").fadeOut(500);
+      };
     </script>
   </body>
 </html>
