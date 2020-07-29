@@ -1,58 +1,58 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="alert alert-primary">Parking Locations</div>
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-body">
-          <div class="ml-auto">
-            <button type="button" class="btn btn-success" (click)="showAddForm()">Add</button>
-          </div>
-          <div class="table-responsive">
-            <hr>
-            <div class="alert alert-danger" *ngIf="tableData?.length===0">No Existing Parking Lots</div>
-            <table
-              id="table"
-              class="table table-striped table-bordered"
-              style="width: 100%;"
-            >
-              <thead class="text-primary">
-                <tr>
-                  <th>
-                    ID
-                  </th>
-                  <th>
-                    Lot
-                  </th>
-                  <th>
-                    Area
-                  </th>
-                  <th>
-                    Location
-                  </th>
-                  <th>
-                    Cost per Hour
-                  </th>
-                  <th>
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let location of tableData">
-                  <td>{{location.id}}</td>
-                  <td>{{location.slot}}</td>
-                  <td>{{location.area.area}}</td>
-                  <td>{{location.area.location}}</td>
-                  <td>{{location.price_per_hour}}</td>
-                  <td>
-                    <button class="btn btn-primary btn-sm table-btn edit" (click)="showEditForm(location)">Edit </button>
-                    <button class="btn btn-danger btn-sm table-btn delete" (click)="deleteParkingLot(location)">Delete</button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+<div class="container-fluid mt-5">
+  <div class="row mb-5">
+    <div class="col text-left mb-3">
+      <h1 class="text-dark">Parking Lots</h1>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <div class="ml-auto">
+        <button type="button" class="btn btn-success" (click)="showAddForm()">Add</button>
+      </div>
+      <div class="table-responsive">
+        <hr>
+        <div class="alert alert-danger" *ngIf="tableData?.length===0">No Existing Parking Lots</div>
+        <table
+          id="table"
+          class="table table-striped table-bordered"
+          style="width: 100%;"
+        >
+          <thead class="text-primary">
+            <tr>
+              <th>
+                ID
+              </th>
+              <th>
+                Lot
+              </th>
+              <th>
+                Area
+              </th>
+              <th>
+                Location
+              </th>
+              <th>
+                Cost per Hour
+              </th>
+              <th>
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let location of tableData">
+              <td>{{location.id}}</td>
+              <td>{{location.slot}}</td>
+              <td>{{location.area.area}}</td>
+              <td>{{location.area.location}}</td>
+              <td>{{location.price_per_hour}}</td>
+              <td>
+                <button class="btn btn-primary btn-sm table-btn edit" (click)="showEditForm(location)">Edit </button>
+                <button class="btn btn-danger btn-sm table-btn delete" (click)="deleteParkingLot(location)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

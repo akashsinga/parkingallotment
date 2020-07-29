@@ -147,6 +147,7 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() 
   {
+    $('#overlay').show();
     var fullname = this.registerForm.get('fullname').value;
     var username = this.registerForm.get('username').value;
     var mobile = this.registerForm.get('mobile').value;
@@ -157,9 +158,10 @@ export class RegisterComponent implements OnInit {
       (data) => {
         console.log(data);
         this.toaster.success("Registration Successful");
+        this.toaster.info("Redirecting to Login Page");
         setTimeout(()=>{
-          this.toaster.info("Redirecting to Login Page");
           this.router.navigate(['']);
+          $('#overlay').fadeOut(500);
         },3000)
       },
       (error) => {

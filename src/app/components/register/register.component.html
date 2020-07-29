@@ -1,108 +1,51 @@
-<div class="content">
-  <div class="title center">
-    MyParking
-  </div>
-</div>
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card">
-        <div class="card-header">
-          <div class="card-title text-center">
-            <div class="alert alert-primary"><h2>Getting Started ! <span class="register-title">Register Now</span></h2></div>
-          </div>
+<div class="row">
+  <div class="col-lg-6 col-md-6 d-none d-md-block image-container"></div>
+  <div class="col-lg-6 col-md-6 form-container">
+    <div class="col-lg-8 col-md-12 col-sm-9 col-xs-12 form-box text-center">
+      <div class="logo mb-3">
+        <div class="title center">
+          MyParking
         </div>
-        <div class="card-body">
-          <form novalidate [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-            <div class="form-group row">
-              <label
-                for="fullname"
-                class="col-md-4 col-form-label text-md-right"
-                ><i class="material-icons">person</i></label
-              >
-              <div class="col-md-6">
-                <mat-form-field class="full-width">
-                  <input matInput [formControlName]="'fullname'" placeholder="Enter Full Name" type="text" required>
-                  <mat-error *ngIf="formErrors.fullname"><b>{{formErrors.fullname}}</b></mat-error>
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label
-                for="username"
-                class="col-md-4 col-form-label text-md-right"
-                ><i class="material-icons">person</i></label
-              >
-              <div class="col-md-6">
-                <mat-form-field class="full-width">
-                  <input matInput [formControlName]="'username'" placeholder="Enter Username" type="text" required>
-                  <mat-error *ngIf="formErrors.username"><b>{{formErrors.username}}</b></mat-error>
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label
-                for="mobile"
-                class="col-md-4 col-form-label text-md-right"
-                ><i class="material-icons">phone</i></label
-              >
-              <div class="col-md-6">
-                <mat-form-field class="full-width">
-                  <input matInput [formControlName]="'mobile'" placeholder="Enter Mobile" type="text" pattern="[0-9]*" required>
-                  <mat-error *ngIf="formErrors.mobile"><b>{{formErrors.mobile}}</b></mat-error>
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label
-                for="mobile"
-                class="col-md-4 col-form-label text-md-right"
-                ><i class="material-icons">mail</i></label
-              >
-              <div class="col-md-6">
-                <mat-form-field class="full-width">
-                  <input matInput [formControlName]="'email'" placeholder="Enter Email" type="email" required>
-                  <mat-error *ngIf="formErrors.email"><b>{{formErrors.email}}</b></mat-error>
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label
-                for="password"
-                class="col-md-4 col-form-label text-md-right"
-                ><i class="material-icons">lock_open</i></label
-              >
-              <div class="col-md-6">
-                <mat-form-field class="full-width">
-                  <input matInput [formControlName]="'password'" placeholder="Enter Password" type="password" required>
-                  <mat-error *ngIf="formErrors.password"><b>{{formErrors.password}}</b></mat-error>
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="form-group row">
-              <label
-                for="password"
-                class="col-md-4 col-form-label text-md-right"
-                ><i class="material-icons">lock_open</i></label
-              >
-              <div class="col-md-6">
-                <mat-form-field class="full-width">
-                  <input matInput [formControlName]="'confirmpassword'" placeholder="Confirm Password" type="password" required>
-                  <mat-error *ngIf="formErrors.confirmpassword"><b>{{formErrors.confirmpassword}}</b></mat-error>
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="card-footer text-center justify-content-center">
-              <div class="col-form-control">
-                <button [disabled]="registerForm.invalid" mat-raised-button type="submit" class="btn btn-success btn-md login-btn">
-                  Register
-                </button>
-                <div class="col-form-control"><a href="/">Already Registered? Login Now</a></div>
-              </div>
-            </div>
-          </form>
-        </div>
+        <h4>Create an Account</h4>
       </div>
+      <form novalidate [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="form-input">
+          <span><i class="material-icons">person</i></span>
+          <input  [formControlName]="'fullname'" placeholder="Enter Full Name" type="text"/>
+          <label class="error" *ngIf="formErrors.fullname">*{{formErrors.fullname}}</label>
+        </div>
+        <div class="form-input">
+          <span><i class="material-icons">person</i></span>
+          <input [formControlName]="'username'" placeholder="Enter Username" type="text"/>
+          <label class="error" *ngIf="formErrors.username">*{{formErrors.username}}</label>
+        </div>
+        <div class="form-input">
+          <span><i class="material-icons">phone</i></span>
+          <input [formControlName]="'mobile'" placeholder="Enter Mobile" type="text" pattern="[0-9]*"/>
+          <label class="error" *ngIf="formErrors.mobile">*{{formErrors.mobile}}</label>
+        </div>
+        <div class="form-input">
+          <span><i class="material-icons">mail</i></span>
+          <input [formControlName]="'email'" placeholder="Enter Email Address" type="email"/>
+          <label class="error" *ngIf="formErrors.email">*{{formErrors.email}}</label>
+        </div>
+        <div class="form-input">
+          <span><i class="material-icons">lock_open</i></span>
+          <input [formControlName]="'password'" placeholder="Choose Password" type="password"/>
+          <label class="error" *ngIf="formErrors.password">*{{formErrors.password}}</label>
+        </div>
+        <div class="form-input">
+          <span><i class="material-icons">lock_open</i></span>
+          <input [formControlName]="'confirmpassword'" placeholder="Confirm Password" type="password"/>
+          <label class="error" *ngIf="formErrors.confirmpassword">*{{formErrors.confirmpassword}}</label>
+        </div>
+        <div class="text-center mb-3">
+          <button [disabled]="registerForm.invalid" type="submit" class="btn btn-success">Register</button>
+        </div>
+        <div style="color:black;">
+          <h4>Already Have an Account?<a href="/" class="forget-link">Login Now</a></h4>
+        </div>
+      </form>
     </div>
   </div>
 </div>

@@ -6,7 +6,10 @@
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
-
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     <link
       href="https://fonts.googleapis.com/css2?family=Mulish&display=swap"
       rel="stylesheet"
@@ -16,32 +19,27 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="assets/css/custom.css" />
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <link
+      rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+    />
   </head>
   <div id="overlay">
     <div class="cv-spinner">
       <span class="spinner"></span>
     </div>
   </div>
-  <body class="mat-typography">
+  <body class="mat-typography specific-page">
     <app-root></app-root>
-    <footer class="page-footer font-small alert-secondary">
-      <div class="footer-copyright fixed-bottom fluid text-center py-3">
+    <!-- <div class="footer-copyright alert-secondary text-center py-3">
         © 2020 Copyright:
         <label>My Parking</label>
-      </div>
-    </footer>
+      </div> -->
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script
-      type="text/javascript"
-      src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"
-    ></script>
+    <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-    <script type="text/javascript">
-      window.onload = function () {
-        $("#overlay").fadeOut(500);
-      };
-    </script>
+    <script src="assets/js/custom.js"></script>
   </body>
 </html>

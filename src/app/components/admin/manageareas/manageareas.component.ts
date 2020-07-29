@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { AdminService } from 'src/app/services/admin.service';
 import { ToastrService } from 'ngx-toastr';
 import { Area } from 'src/app/models/Area';
-import { areAllEquivalent } from '@angular/compiler/src/output/output_ast';
+import Swal from 'sweetalert2';
 declare var $;
 
 @Component({
@@ -93,5 +93,31 @@ export class ManageareasComponent implements OnInit {
         this.toaster.error('Area Updation Failed');
       }
     );
+  }
+
+  deleteParkingArea(area:any)
+  {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: 'green',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.adminService.deleteParkingArea(area.id).subscribe((data)=>{
+          Swal.fire(
+            'Deleted!',
+             data['response'],
+            'success'
+          )
+          setTimeout(()=>{
+            window.location.reload();
+          },3000);
+        });
+      }
+    })
   }
 }

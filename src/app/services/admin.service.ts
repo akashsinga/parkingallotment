@@ -61,4 +61,9 @@ export class AdminService {
   {
     return this.httpclient.get(this.url+"/parkings/delete/"+id);
   }
+
+  deleteParkingArea(id:number):Observable<any>
+  {
+    return this.httpclient.get(this.url+"/parkings/areas/delete/"+id);
+  }
 }
