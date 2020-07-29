@@ -40,6 +40,7 @@ export class MybookingsComponent implements OnInit {
     document.getElementById('from_datetime').innerText=booking.fromdatetime;
     document.getElementById('to_datetime').innerText=booking.todatetime;
     document.getElementById('cost').innerText="₹ "+booking.cost;
+    document.getElementById('status').innerText=booking.status;
     $('#booking_details').modal('show');
   }
 

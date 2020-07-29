@@ -29,7 +29,7 @@ const routes: Routes = [
     component: AdminlayoutComponent,
     children: [
       { path: 'dashboard', component: AdminDashboard },
-      { path: 'parkings/slots', component: ManageparkingsComponent },
+      { path: 'parkings/lots', component: ManageparkingsComponent },
       { path: 'parkings/areas', component: ManageareasComponent },
     ],
   },

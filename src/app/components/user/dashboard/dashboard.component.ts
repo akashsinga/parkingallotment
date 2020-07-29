@@ -46,11 +46,8 @@ export class DashboardComponent implements OnInit {
     modal: {
       ondismiss: () => {
         this.zone.run(() => {
-          this.errMsg = 'Parking Reservation Failed';
-          setTimeout(() => {
+          this.toaster.error('Parking Reservation Failed');
             $('#reserveForm').modal('hide');
-            window.location.reload();
-          }, 1000);
         });
       },
     },
@@ -256,6 +253,7 @@ export class DashboardComponent implements OnInit {
           {
             this.continue=false;
             $('#reserveForm').modal('hide');
+            this.toaster.error('Parking Reservation Failed');
           }
         })
       }
