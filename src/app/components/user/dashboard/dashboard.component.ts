@@ -5,7 +5,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {WindowRefService,ICustomWindow} from 'src/app/services/window-ref.service';
 import { CheckAvailability } from 'src/app/Dto/CheckAvailability';
 import { ToastrService } from 'ngx-toastr';
-
+import Swal from 'sweetalert2';
+import { isObject } from 'util';
 declare var $;
 @Component({
   selector: 'app-dashboard',
@@ -13,6 +14,7 @@ declare var $;
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
+  
   tableData: [];
   reservedata: [];
   reserveForm: FormGroup;
@@ -21,6 +23,8 @@ export class DashboardComponent implements OnInit {
   responseMsg: string;
   errMsg: string;
   check: CheckAvailability;
+  continue:boolean;
+  addToWaiting:boolean=false;
 
   private window: ICustomWindow;
   public rzp: any;
@@ -89,6 +93,7 @@ export class DashboardComponent implements OnInit {
       todatetime: '',
       cost: 0,
       paymentId: '',
+      status:''
     };
     this.check = {
       slot: 0,
@@ -143,18 +148,14 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  showReserveForm(): void {
-    var table = $('#table').DataTable();
-    table.on('click', '.reserve', function () {
-      var tr = $(this).closest('tr');
-      if ($(tr).hasClass('child')) {
-        tr = tr.prev('.parent');
-      }
-      var data = table.row(tr).data();
-      $('#slot').val(data[1]);
-      $('#area').val(data[2]);
-      $('#location').val(data[3]);
-      $('#price').val(data[4]);
+  showReserveForm(row:any): void {
+    this.reserveForm.setValue({
+      slot:row.slot,
+      price:row.price_per_hour,
+      area:row.area.area,
+      location:row.area.location,
+      fromdatetime:'',
+      todatetime:''
     });
     $('#reserveForm').modal('show');
   }
@@ -168,10 +169,6 @@ export class DashboardComponent implements OnInit {
       if (this.diff_hours(new Date(from.value), new Date()) < 2) {
         from.setErrors({ invalid: true });
       }
-      // else if(this.checkAvailability(from.value))
-      // {
-      //   from.setErrors({ unavailable: true });
-      // } 
       else if (from.value > to.value) {
         from.setErrors({ lessthan: true });
       } else {
@@ -189,12 +186,9 @@ export class DashboardComponent implements OnInit {
     return Math.abs(diff);
   }
 
-  initPayment(): void {
-    let user = JSON.parse(localStorage.getItem('user'));
-    this.options.prefill.name = user['username'];
-    this.options.amount = this.cost * 100;
-    this.rzp = new this.winRef.NativeWindow['Razorpay'](this.options);
-    this.rzp.open();
+  initPayment(): void 
+  {
+    this.checkAvailability(this.reserveForm.get('fromdatetime').value);
   }
 
   paymentHandler(res: any) {
@@ -209,16 +203,17 @@ export class DashboardComponent implements OnInit {
       var todatetime = this.reserveForm.get('todatetime').value;
       var cost = this.cost;
       var paymentId = res['razorpay_payment_id'];
-      this.reservation=new ReserveParking(id,slot,area,location,fromdatetime,todatetime,paymentId,cost);
+      this.reservation=new ReserveParking(id,slot,area,location,fromdatetime,todatetime,paymentId,cost,this.addToWaiting?"waiting":"reserved");
       console.log(this.reservation);
       this.userService.reserveParking(this.reservation).subscribe(
         (data) => {
-          console.log('Request Sent');
-          this.toaster.success('Parking Successfully Booked');
-          setTimeout(() => {
-            $('#reserveForm').modal('hide');
-            window.location.reload();
-          }, 1000);
+          $('#reserveForm').modal('hide');
+          Swal.fire({
+            icon: 'success',
+            title: 'Parking Successfully Reserved',
+            showConfirmButton: false,
+            timer: 1500
+          })
         },
         (error) => {
           console.log(error);
@@ -228,24 +223,51 @@ export class DashboardComponent implements OnInit {
     $('#overlay').fadeOut(500);
   }
 
-  checkAvailability(fromdatetime:any) {
+  checkAvailability(fromdatetime:any)
+  {
     console.log(fromdatetime);
-    if(fromdatetime!=null)
+    var slot = parseInt((<HTMLInputElement>document.getElementById('slot')).value);
+    var area = (<HTMLInputElement>document.getElementById('area')).value;
+    var location = (<HTMLInputElement>(document.getElementById('location'))).value;
+    this.check=new CheckAvailability(fromdatetime,slot,area,location);
+    this.userService.isAvailable(this.check).subscribe((data)=>
     {
-      this.check.slot = parseInt(
-        (<HTMLInputElement>document.getElementById('slot')).value
-      );
-      this.check.area = (<HTMLInputElement>document.getElementById('area')).value;
-      this.check.location = (<HTMLInputElement>(
-        document.getElementById('location')
-      )).value;
-      this.check.fromdatetime = fromdatetime;
-      console.log(this.check);
-      var Available;
-      this.userService.isAvailable(this.check).subscribe((data) => {
-        Available=data['response'];
-      });
-      return Available==="true"?true:false;
-    }
+      if(data['response']=="true")
+      {
+        Swal.fire({
+          title:'Parking Already Reserved',
+          text: "Do You Want to Join the Waiting List?",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: 'green',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, continue'
+        }).then((result) => {
+          if (result.value) {
+            this.continue=true;
+            this.addToWaiting=true;
+            let user = JSON.parse(localStorage.getItem('user'));
+            this.options.prefill.name = user['username'];
+            this.options.amount = this.cost * 100;
+            this.rzp = new this.winRef.NativeWindow['Razorpay'](this.options);
+            this.rzp.open();
+          }
+          else
+          {
+            this.continue=false;
+            $('#reserveForm').modal('hide');
+          }
+        })
+      }
+      else
+      {
+        this.addToWaiting=false;
+        let user = JSON.parse(localStorage.getItem('user'));
+        this.options.prefill.name = user['username'];
+        this.options.amount = this.cost * 100;
+        this.rzp = new this.winRef.NativeWindow['Razorpay'](this.options);
+        this.rzp.open();
+      }
+    });
   }
 }
