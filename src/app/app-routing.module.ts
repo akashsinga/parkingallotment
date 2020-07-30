@@ -7,7 +7,6 @@ import { DashboardComponent as AdminDashboard } from './components/admin/dashboa
 import { UserlayoutComponent } from './components/user/userlayout/userlayout.component';
 import { AdminlayoutComponent } from './components/admin/adminlayout/adminlayout.component';
 import { ManageparkingsComponent } from './components/admin/manageparkings/manageparkings.component';
-import { ManageareasComponent } from './components/admin/manageareas/manageareas.component';
 import { MybookingsComponent } from './components/user/mybookings/mybookings.component';
 
 const routes: Routes = [
@@ -30,7 +29,6 @@ const routes: Routes = [
     children: [
       { path: 'dashboard', component: AdminDashboard },
       { path: 'parkings/lots', component: ManageparkingsComponent },
-      { path: 'parkings/areas', component: ManageareasComponent },
     ],
   },
 ];

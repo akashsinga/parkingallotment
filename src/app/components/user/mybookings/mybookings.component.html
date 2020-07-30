@@ -23,16 +23,13 @@
                 Booking Date
               </th>
               <th>
-                Slot
-              </th>
-              <th>
                 Area
               </th>
               <th>
-                Location
+                Cost
               </th>
               <th>
-                Cost
+                Status
               </th>
               <th>
                 Actions
@@ -51,16 +48,13 @@
                 {{ booking.booking_date }}
               </td>
               <td>
-                {{ booking.location.slot }}
-              </td>
-              <td>
-                {{ booking.location.area.area }}
-              </td>
-              <td>
-                {{ booking.location.area.location }}
+                {{ booking.location.name }}
               </td>
               <td>
                 ₹ {{ booking.cost }}
+              </td>
+              <td>
+                {{booking.status}}
               </td>
               <td>
                 <button class="btn btn-sm btn-primary table-btn" (click)="showDetails(booking)">
@@ -95,14 +89,6 @@
         <div class="row">
           <label class="label-head">Payment ID:</label>
           <label id="payment_id"></label>
-        </div>
-        <div class="row">
-          <label class="label-head">Slot:</label>
-          <label id="slot"></label>
-        </div>
-        <div class="row">
-          <label class="label-head">Location:</label>
-          <label id="location"></label>
         </div>
         <div class="row">
           <label class="label-head">Area:</label>

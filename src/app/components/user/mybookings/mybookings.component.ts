@@ -34,9 +34,7 @@ export class MybookingsComponent implements OnInit {
     document.getElementById('id').innerText=booking.id;
     document.getElementById('booking_date').innerText=booking.booking_date;
     document.getElementById('payment_id').innerText=booking.payment_Id;
-    document.getElementById('slot').innerText=booking.location.slot;
-    document.getElementById('location').innerText=booking.location.area.location;
-    document.getElementById('area').innerText=booking.location.area.area;
+    document.getElementById('area').innerText=booking.location.name;
     document.getElementById('from_datetime').innerText=booking.fromdatetime;
     document.getElementById('to_datetime').innerText=booking.todatetime;
     document.getElementById('cost').innerText="₹ "+booking.cost;
@@ -57,9 +55,8 @@ export class MybookingsComponent implements OnInit {
     doc.text('Booking ID : '+booking.id,16,35);
     doc.text('Payment ID : '+booking.payment_Id,16,40);
     doc.text('Booking Date : '+booking.booking_date,16,45);
-    doc.text('Parking Slot : '+booking.location.slot,40,60);
-    doc.text('Parking Area : '+booking.location.area.area,40,65);
-    doc.text('Parking Location : '+booking.location.area.location,40,70);
+    doc.text('Parking Area : '+booking.location.name,40,60);
+    // doc.text('Parking Area : '+booking.location.area.area,40,65);
     doc.line(35,75,175,75,'F');
     doc.text('From : ',40,85);
     doc.text(booking.fromdatetime,130,85);

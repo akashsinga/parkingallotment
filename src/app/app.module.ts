@@ -12,6 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { DataTablesModule } from 'angular-datatables';
 import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
+import { AgmCoreModule } from '@agm/core';
 //component imports
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
@@ -23,7 +24,6 @@ import { HeaderComponent as UserHeader} from './components/user/header/header.co
 import { AdminlayoutComponent } from './components/admin/adminlayout/adminlayout.component';
 import { NavbarComponent } from './components/admin/navbar/navbar.component';
 import { ManageparkingsComponent } from './components/admin/manageparkings/manageparkings.component';
-import { ManageareasComponent } from './components/admin/manageareas/manageareas.component';
 import { MybookingsComponent } from './components/user/mybookings/mybookings.component';
 
 @NgModule({
@@ -38,7 +38,6 @@ import { MybookingsComponent } from './components/user/mybookings/mybookings.com
     AdminlayoutComponent,
     NavbarComponent,
     ManageparkingsComponent,
-    ManageareasComponent,
     MybookingsComponent,
   ],
   imports: [
@@ -58,6 +57,9 @@ import { MybookingsComponent } from './components/user/mybookings/mybookings.com
       timeOut:3000,
       positionClass:'toast-top-right',
       preventDuplicates:true
+    }),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCIFPolMMtcTCfqyGA1vqBvEv9zKH-uNqg'
     })
   ],
   providers: [],

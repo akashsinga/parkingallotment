@@ -18,7 +18,6 @@ export class DashboardComponent implements OnInit {
     this.adminService.getDashboardCounts().subscribe((data)=>{
       this.user_count=data['user_count'];
       this.parkings_count=data['parkings_count'];
-      this.locations_count=data['locations_count'];
       this.bookings_count=data['bookings_count'];
       this.tableData=data['bookings'];
     });
@@ -34,9 +33,7 @@ export class DashboardComponent implements OnInit {
     document.getElementById('booking_date').innerText=booking.booking_date;
     document.getElementById('reservee').innerText=booking.user.fullname;
     document.getElementById('payment_id').innerText=booking.payment_Id;
-    document.getElementById('slot').innerText=booking.location.slot;
-    document.getElementById('location').innerText=booking.location.area.location;
-    document.getElementById('area').innerText=booking.location.area.area;
+    document.getElementById('area').innerText=booking.location.name;
     document.getElementById('from_datetime').innerText=booking.fromdatetime;
     document.getElementById('to_datetime').innerText=booking.todatetime;
     document.getElementById('cost').innerText="₹ "+booking.cost;

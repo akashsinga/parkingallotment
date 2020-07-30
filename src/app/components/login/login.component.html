@@ -7,7 +7,7 @@
         <div class="title center">
             MyParking
           </div>
-          <h3>Login to your Account</h3>
+          <h5>Login to your Account</h5>
       </div>
       <form novalidate [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="form-input">
@@ -24,10 +24,10 @@
           <button [disabled]="loginForm.invalid" type="submit" class="btn btn-success">Login</button>
         </div>
         <div style="color:black;">
-          <h4><a href="#" class="forget-link">Forgot Password?</a></h4>
+          <h6><a href="#" class="forget-link">Forgot Password?</a></h6>
         </div>
         <div style="color:black;">
-          <h4>Dont Have an Account? <a href="/register" class="register-link">Register Now</a></h4>
+          <h6>Dont Have an Account? <a href="/register" class="register-link">Register Now</a></h6>
         </div>
       </form>
     </div>

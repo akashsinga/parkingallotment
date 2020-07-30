@@ -1,60 +1,21 @@
 <div class="container-fluid mt-5">
-  <div class="row mb-5">
-    <div class="col text-left mb-3">
-      <h1 class="text-dark">Parking Lots</h1>
-    </div>
+  <div class="div">
+    <button class="btn btn-success" (click)="isAdd?showAddForm():showEditForm(null)">Add Parking Lot</button>
   </div>
-  <div class="card">
-    <div class="card-body">
-      <div class="ml-auto">
-        <button type="button" class="btn btn-success" (click)="showAddForm()">Add</button>
-      </div>
-      <div class="table-responsive">
-        <hr>
-        <div class="alert alert-danger" *ngIf="tableData?.length===0">No Existing Parking Lots</div>
-        <table
-          id="table"
-          class="table table-striped table-bordered"
-          style="width: 100%;"
-        >
-          <thead class="text-primary">
-            <tr>
-              <th>
-                ID
-              </th>
-              <th>
-                Lot
-              </th>
-              <th>
-                Area
-              </th>
-              <th>
-                Location
-              </th>
-              <th>
-                Cost per Hour
-              </th>
-              <th>
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let location of tableData">
-              <td>{{location.id}}</td>
-              <td>{{location.slot}}</td>
-              <td>{{location.area.area}}</td>
-              <td>{{location.area.location}}</td>
-              <td>{{location.price_per_hour}}</td>
-              <td>
-                <button class="btn btn-primary btn-sm table-btn edit" (click)="showEditForm(location)">Edit </button>
-                <button class="btn btn-danger btn-sm table-btn delete" (click)="deleteParkingLot(location)">Delete</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+  <div class="map-container">
+    <agm-map [zoom]="6" [latitude]="20.5937" [longitude]="78.9629">
+      <agm-marker *ngFor="let row of tableData" [latitude]="row.latitude" [longitude]="row.longitude">
+        <agm-info-window>
+          <strong>Location: {{row.name}}</strong>
+          <br>
+          <strong>Price Per Hour: {{row.price_per_hour}}</strong>
+          <br>
+          <br>
+          <button class="btn btn-primary table-btn" (click)="showEditForm(row)">Edit</button>
+          <button class="btn btn-danger table-btn" (click)="deleteParkingLot(row)">Delete</button>
+        </agm-info-window>
+      </agm-marker>
+    </agm-map>
   </div>
 </div>
 <div class="modal fade" id="lot-form">
@@ -66,40 +27,21 @@
       <div class="modal-body">
         <form novalidate [formGroup]="lot_form">
           <input class="form-control" [formControlName]="'id'" type="hidden">
-            <label for="slot" class="col-form-label text-dark">
-              Slot</label>
+            <label for="price" class="col-form-label text-dark" >Name</label>
             <div class="form-group">
-                <input class="form-control" [formControlName]="'slot'" placeholder="Enter Slot"  type="text" required>
+                <input class="form-control" [formControlName]="'name'"  placeholder="Enter Location Name" type="text" required>
             </div>
-            <label
-              for="price"
-              class="col-form-label text-dark"
-              >Price per Hour</label
-            >
+            <label for="price" class="col-form-label text-dark">Price per Hour</label>
             <div class="form-group">
                 <input class="form-control" [formControlName]="'price'"  placeholder="Enter Price Per Hour" type="text" required>
             </div>
-            <label
-              for="username"
-              class="col-form-label text-dark"
-              >Area</label
-            >
+            <label for="price" class="col-form-label text-dark">Latitude</label>
             <div class="form-group">
-               <select class="custom-select full-width"  [formControlName]="'area'">
-                <option hidden value=""  selected>Select Area </option>
-                <option *ngFor="let area of areas" value="{{area}}">{{area | titlecase}}</option>
-               </select>
+                <input class="form-control" [formControlName]="'latitude'"  placeholder="Enter Latitude" type="text" required>
             </div>
-            <label
-              for="username"
-              class="col-form-label text-dark"
-              >Location</label
-            >
+            <label for="price" class="col-form-label text-dark">Longitude</label>
             <div class="form-group">
-               <select class="custom-select full-width"  [formControlName]="'location'">
-                <option hidden value="" selected>Select Location </option>
-                <option *ngFor="let location of locations" value="{{location}}">{{location | titlecase}}</option>
-               </select>
+                <input class="form-control" [formControlName]="'longitude'"  placeholder="Enter Longitude" type="text" required>
             </div>
         </form>
       </div>

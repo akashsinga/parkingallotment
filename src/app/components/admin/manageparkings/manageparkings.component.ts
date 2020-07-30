@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from 'src/app/services/admin.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Area } from 'src/app/models/Area';
-import { ParkingLocation } from 'src/app/models/Location';
+import { ParkingLot } from 'src/app/models/Location';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
+
 declare var $: any;
 @Component({
   selector: 'app-manageparkings',
@@ -14,54 +14,41 @@ declare var $: any;
 export class ManageparkingsComponent implements OnInit {
 
   tableData: [];
-  areas: [];
-  locations: [];
-  area: Area;
-  location: ParkingLocation;
+  location: ParkingLot;
   lot_form: FormGroup;
   isAdd:boolean=true;
+  lat:number;
+  lng:number;
  
   constructor(private adminService: AdminService,private formBuilder: FormBuilder,private toaster:ToastrService) {
     this.adminService.getParkingLocations().subscribe((data) => {
       this.tableData = data;
     });
-    this.adminService.getAreas().subscribe((data) => {
-      console.log(data);
-      this.areas = data;
-    });
-    this.adminService.getLocations().subscribe((data) => {
-      console.log(data);
-      this.locations = data;
-    });
     this.createForm();
   }
-
+  
   ngOnInit(): void {
   }
-
+  
   createForm(): void {
     this.lot_form = this.formBuilder.group({
       id:'',
-      slot: ['', Validators.required],
-      area: ['', Validators.required],
-      location: ['', Validators.required],
+      name: ['', Validators.required],
+      latitude: ['', Validators.required],
+      longitude: ['', Validators.required],
       price: ['', Validators.required],
     });
-    this.area = {
-      area: '',
-      location: '',
-    };
     this.location = {
-      slot: 0,
-      area: this.area,
+      name:'',
+      latitude:'',
+      longitude: '',
       price_per_hour: 0,
     };
   }
 
   onSubmit(): void 
   {
-    this.area=new Area(this.lot_form.get('area').value,this.lot_form.get('location').value);
-    this.location=new ParkingLocation(this.lot_form.get('slot').value,this.area,this.lot_form.get('price').value);
+    this.location=new ParkingLot(this.lot_form.get('name').value,this.lot_form.get('latitude').value,this.lot_form.get('longitude').value,this.lot_form.get('price').value);
     console.log(this.location);
     this.adminService.addParkingLocation(this.location).subscribe(
       (data) => {
@@ -92,18 +79,17 @@ export class ManageparkingsComponent implements OnInit {
     document.getElementById('form-head').innerText="Edit Parking Lot";
     this.lot_form.setValue({
       id:location.id,
-      slot:location.slot,
+      name:location.name,
+      latitude:location.latitude,
       price:location.price_per_hour,
-      area:location.area.area,
-      location:location.area.location,
+      longitude:location.longitude,
     });
     $('#lot-form').modal('show');
   }
 
   editParkingLot()
   {
-    this.area=new Area(this.lot_form.get('area').value,this.lot_form.get('location').value);
-    this.location=new ParkingLocation(this.lot_form.get('slot').value,this.area,this.lot_form.get('price').value);
+    this.location=new ParkingLot(this.lot_form.get('name').value,this.lot_form.get('latitude').value,this.lot_form.get('longitude').value,this.lot_form.get('price').value);
     var id=this.lot_form.get('id').value;
     this.adminService.editParkingLocation(this.location,id).subscribe(
       (data) => {

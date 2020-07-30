@@ -29,6 +29,6 @@ export class UserService {
 
   isAvailable(check:CheckAvailability):Observable<any>
   {
-    return this.httpclient.post(this.url+"parkings/slots/available",check);
+    return this.httpclient.post(this.url+"parkings/lots/available",check);
   }
 }

@@ -1,12 +1,13 @@
-import { Area } from './Area';
-export class ParkingLocation{
-    slot:number;
-    area:Area;
+export class ParkingLot{
+    name:string;
+    latitude:string;
+    longitude:string;
     price_per_hour:number;
-    constructor(slot:any,area:Area,price:any)
+    constructor(name:string,latitude:string,longitude:string,price:any)
     {
-        this.slot=slot;
-        this.area=area;
+        this.name=name;
+        this.latitude=latitude;
+        this.longitude=longitude;
         this.price_per_hour=price;
     }
 }

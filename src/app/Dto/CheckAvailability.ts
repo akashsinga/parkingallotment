@@ -2,16 +2,12 @@ import { ThrowStmt } from '@angular/compiler';
 
 export class CheckAvailability {
   fromdatetime: string;
-  slot: number;
-  area: string;
-  location: string;
-  
-  constructor(fromdatetime:string,slot:number,area:string,location:string)
+  parking_id: number;
+
+  constructor(fromdatetime:string,parking_id:number)
   {
     this.fromdatetime=fromdatetime;
-    this.slot=slot;
-    this.area=area;
-    this.location=location;
+    this.parking_id=parking_id;
   }
 
 }

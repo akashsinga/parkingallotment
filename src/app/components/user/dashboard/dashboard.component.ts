@@ -6,7 +6,6 @@ import {WindowRefService,ICustomWindow} from 'src/app/services/window-ref.servic
 import { CheckAvailability } from 'src/app/Dto/CheckAvailability';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
-import { isObject } from 'util';
 declare var $;
 @Component({
   selector: 'app-dashboard',
@@ -25,9 +24,17 @@ export class DashboardComponent implements OnInit {
   check: CheckAvailability;
   continue:boolean;
   addToWaiting:boolean=false;
+  lat:number=51.678418;
+  lng:number=7.809007;
 
   private window: ICustomWindow;
   public rzp: any;
+
+
+  markerClicked()
+  {
+    console.log(this.lat);
+  }
 
   public options: any = {
     key: 'rzp_test_2lC3r77dmEDTFZ',
@@ -83,9 +90,7 @@ export class DashboardComponent implements OnInit {
   initReservation(): void {
     this.reservation = {
       user_id: 0,
-      area: '',
-      location: '',
-      slot: 0,
+      parking_id:0,
       fromdatetime: '',
       todatetime: '',
       cost: 0,
@@ -93,10 +98,8 @@ export class DashboardComponent implements OnInit {
       status:''
     };
     this.check = {
-      slot: 0,
-      area: '',
-      location: '',
       fromdatetime: '',
+      parking_id:0
     };
   }
 
@@ -107,12 +110,11 @@ export class DashboardComponent implements OnInit {
   createForm(): void {
     this.reserveForm = this.formBuilder.group(
       {
-        slot: '',
+        parking_id: '',
+        name:'',
         price: '',
         fromdatetime: ['', Validators.required],
         todatetime: ['', Validators.required],
-        area: '',
-        location: '',
       },
       {
         validator: [this.checkTimeDifference('fromdatetime', 'todatetime')],
@@ -147,10 +149,9 @@ export class DashboardComponent implements OnInit {
 
   showReserveForm(row:any): void {
     this.reserveForm.setValue({
-      slot:row.slot,
+      parking_id:row.id,
       price:row.price_per_hour,
-      area:row.area.area,
-      location:row.area.location,
+      name:row.name,
       fromdatetime:'',
       todatetime:''
     });
@@ -193,14 +194,12 @@ export class DashboardComponent implements OnInit {
     this.zone.run(() => {
       console.log(res);
       var id = JSON.parse(localStorage.getItem('user'))['id'];
-      var area = (<HTMLInputElement>(document.getElementById('area'))).value;
-      var location = (<HTMLInputElement>(document.getElementById('location'))).value;
-      var slot = parseInt((<HTMLInputElement>document.getElementById('slot')).value);
+      var parking_id = parseInt((<HTMLInputElement>document.getElementById('parking_id')).value);
       var fromdatetime = this.reserveForm.get('fromdatetime').value;
       var todatetime = this.reserveForm.get('todatetime').value;
       var cost = this.cost;
       var paymentId = res['razorpay_payment_id'];
-      this.reservation=new ReserveParking(id,slot,area,location,fromdatetime,todatetime,paymentId,cost,this.addToWaiting?"waiting":"reserved");
+      this.reservation=new ReserveParking(id,parking_id,fromdatetime,todatetime,paymentId,cost,this.addToWaiting?"waiting":"reserved");
       console.log(this.reservation);
       this.userService.reserveParking(this.reservation).subscribe(
         (data) => {
@@ -223,10 +222,8 @@ export class DashboardComponent implements OnInit {
   checkAvailability(fromdatetime:any)
   {
     console.log(fromdatetime);
-    var slot = parseInt((<HTMLInputElement>document.getElementById('slot')).value);
-    var area = (<HTMLInputElement>document.getElementById('area')).value;
-    var location = (<HTMLInputElement>(document.getElementById('location'))).value;
-    this.check=new CheckAvailability(fromdatetime,slot,area,location);
+    var parking_id = parseInt((<HTMLInputElement>document.getElementById('parking_id')).value);
+    this.check=new CheckAvailability(fromdatetime,parking_id);
     this.userService.isAvailable(this.check).subscribe((data)=>
     {
       if(data['response']=="true")
