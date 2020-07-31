@@ -8,6 +8,7 @@ import { UserlayoutComponent } from './components/user/userlayout/userlayout.com
 import { AdminlayoutComponent } from './components/admin/adminlayout/adminlayout.component';
 import { ManageparkingsComponent } from './components/admin/manageparkings/manageparkings.component';
 import { MybookingsComponent } from './components/user/mybookings/mybookings.component';
+import { ManageusersComponent } from './components/admin/manageusers/manageusers.component';
 
 const routes: Routes = [
   //auth routes
@@ -29,6 +30,7 @@ const routes: Routes = [
     children: [
       { path: 'dashboard', component: AdminDashboard },
       { path: 'parkings/lots', component: ManageparkingsComponent },
+      { path: 'users',component:ManageusersComponent }
     ],
   },
 ];

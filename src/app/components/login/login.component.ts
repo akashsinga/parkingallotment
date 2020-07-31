@@ -4,6 +4,8 @@ import { AuthService } from '../../services/auth-service.service';
 import { LoginRequest } from '../../Dto/LoginRequest';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { login } from 'src/app/shared/validationMessages';
+import { loginFormErrors } from 'src/app/shared/formErrors';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,20 +15,7 @@ export class LoginComponent implements OnInit {
   errmsg: string;
   loginForm: FormGroup;
   loginRequest: LoginRequest;
-
-  formErrors = {
-    username: '',
-    password: '',
-  };
-
-  validationMessages = {
-    username: {
-      required: 'Username is required.',
-    },
-    password: {
-      required: 'Password is required',
-    },
-  };
+  formErrors=loginFormErrors;
 
   constructor(private formBuilder: FormBuilder,private authService: AuthService,private router: Router,private toaster: ToastrService)
   {
@@ -86,15 +75,15 @@ export class LoginComponent implements OnInit {
       return;
     }
     const form = this.loginForm;
-    for (const field in this.formErrors) {
-      if (this.formErrors.hasOwnProperty(field)) {
-        this.formErrors[field] = '';
+    for (const field in loginFormErrors) {
+      if (loginFormErrors.hasOwnProperty(field)) {
+        loginFormErrors[field] = '';
         const control = form.get(field);
         if (control && control.dirty && !control.valid) {
-          const messages = this.validationMessages[field];
+          const messages = login[field];
           for (const key in control.errors) {
             if (control.errors.hasOwnProperty(key)) {
-              this.formErrors[field] += messages[key] + ' ';
+              loginFormErrors[field] += messages[key] + ' ';
             }
           }
         }

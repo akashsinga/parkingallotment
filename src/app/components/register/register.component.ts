@@ -5,6 +5,8 @@ import { AuthService } from '../../services/auth-service.service';
 import { Router } from '@angular/router';
 import { uniqueUsernameValidator } from '../../shared/unique-username-validator.directive';
 import { ToastrService } from 'ngx-toastr';
+import { registerFormErrors } from 'src/app/shared/formErrors';
+import { register } from 'src/app/shared/validationMessages';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -14,48 +16,8 @@ export class RegisterComponent implements OnInit {
 
   registerForm: FormGroup;
   registerRequest: RegisterRequest;
-  errMess: string;
-  exist:string;
-
-  formErrors = {
-    fullname: '',
-    username: '',
-    mobile: '',
-    email: '',
-    password: '',
-    confirmpassword: '',
-  };
+  formErrors=registerFormErrors;
   
-  validationMessages = {
-    fullname: {
-      required: 'Full Name is required.',
-      minlength: 'Full Name must be at least 2 characters long.',
-      maxlength: 'Full Name cannot be more than 25 characters long.',
-    },
-    username: {
-      required: 'User Name is required.',
-      minlength: 'User Name must be at least 2 characters long.',
-      maxlength: 'User Name cannot be more than 25 characters long.',
-      notunique: 'Username already exists'
-    },
-    mobile: {
-      required: 'Mobile Number is required.',
-      pattern: 'Mobile Number must contain only numbers.',
-    },
-    email: {
-      required: 'Email is required.',
-      email: 'Email not in valid format.',
-    },
-    password: {
-      required: 'Password is required',
-      minlength: 'Password must be at least 6 characters long.',
-    },
-    confirmpassword: {
-      required: 'Confirm Password is required',
-      mustMatch: 'Password and Confirm Password doesnot match',
-    },
-  };
-
   constructor(private formBuilder: FormBuilder,public authService: AuthService,private router: Router,private toaster:ToastrService) 
   {
     this.createForm();
@@ -74,25 +36,8 @@ export class RegisterComponent implements OnInit {
   createForm(): void {
     this.registerForm = this.formBuilder.group(
       {
-        fullname: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(2),
-            Validators.maxLength(25),
-          ],
-        ],
-        username: [
-          '',
-          [
-            Validators.required,
-            Validators.minLength(2),
-            Validators.maxLength(25),
-          ],
-          [
-            uniqueUsernameValidator(this.authService)
-          ]
-        ],
+        fullname: ['',[Validators.required,Validators.minLength(2),Validators.maxLength(25)]],
+        username: ['',[Validators.required,Validators.minLength(2),Validators.maxLength(25),],[uniqueUsernameValidator(this.authService)]],
         mobile: ['', [Validators.required, Validators.pattern]],
         email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required, Validators.minLength(6)]],
@@ -114,15 +59,15 @@ export class RegisterComponent implements OnInit {
       return;
     }
     const form = this.registerForm;
-    for (const field in this.formErrors) {
-      if (this.formErrors.hasOwnProperty(field)) {
-        this.formErrors[field] = '';
+    for (const field in registerFormErrors) {
+      if (registerFormErrors.hasOwnProperty(field)) {
+        registerFormErrors[field] = '';
         const control = form.get(field);
         if (control && control.dirty && !control.valid) {
-          const messages = this.validationMessages[field];
+          const messages = register[field];
           for (const key in control.errors) {
             if (control.errors.hasOwnProperty(key)) {
-              this.formErrors[field] += messages[key] + ' ';
+              registerFormErrors[field] += messages[key] + ' ';
             }
           }
         }

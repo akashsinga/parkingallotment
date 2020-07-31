@@ -29,7 +29,8 @@
             ],
             "allowedCommonJsDependencies": [
               "datatables.net",
-              "jquery"
+              "jquery",
+              "jspdf"
            ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.css",

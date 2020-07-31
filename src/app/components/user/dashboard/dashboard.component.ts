@@ -5,6 +5,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {WindowRefService,ICustomWindow} from 'src/app/services/window-ref.service';
 import { CheckAvailability } from 'src/app/Dto/CheckAvailability';
 import { ToastrService } from 'ngx-toastr';
+import { reservation } from 'src/app/shared/validationMessages';
+import { reservationFormErrors } from 'src/app/shared/formErrors';
 import Swal from 'sweetalert2';
 declare var $;
 @Component({
@@ -15,26 +17,19 @@ declare var $;
 export class DashboardComponent implements OnInit {
   
   tableData: [];
-  reservedata: [];
   reserveForm: FormGroup;
   cost: number;
   reservation: ReserveParking;
-  responseMsg: string;
-  errMsg: string;
   check: CheckAvailability;
   continue:boolean;
   addToWaiting:boolean=false;
-  lat:number=51.678418;
-  lng:number=7.809007;
+  latitude:number;
+  longitude:number;
+  formErrors = reservationFormErrors;
+  icon="../../../../assets/img/blue-dot.png";
 
   private window: ICustomWindow;
   public rzp: any;
-
-
-  markerClicked()
-  {
-    console.log(this.lat);
-  }
 
   public options: any = {
     key: 'rzp_test_2lC3r77dmEDTFZ',
@@ -60,24 +55,6 @@ export class DashboardComponent implements OnInit {
     },
   };
 
-  formErrors = {
-    fromdatetime: '',
-    todatetime: '',
-  };
-
-  validationMessages = {
-    fromdatetime: {
-      required: 'From Date Time is required',
-      lessthan: 'From Date Time should be less than To Date Time',
-      invalid: 'From Date Time should be 2 hours later from now',
-      unavailable: 'Parking Slot for this Time Frame is not Available',
-    },
-    todatetime: {
-      lessthan: 'To Date Time should be greater than From Date Time',
-      required: 'To Date Time is required',
-    },
-  };
-
   constructor(private userService: UserService,private zone: NgZone,private winRef: WindowRefService,private formBuilder: FormBuilder,private toaster:ToastrService) {
     this.userService.getLocations().subscribe((data) => {
       this.tableData = data;
@@ -99,11 +76,20 @@ export class DashboardComponent implements OnInit {
     };
     this.check = {
       fromdatetime: '',
+      todatetime:'',
       parking_id:0
     };
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (window.navigator && window.navigator.geolocation) {
+      window.navigator.geolocation.getCurrentPosition(
+          position => {
+            this.latitude=position.coords.latitude;
+            this.longitude=position.coords.longitude;
+      });
+    };
+  }
 
   ngAfterViewInit() {}
 
@@ -131,12 +117,12 @@ export class DashboardComponent implements OnInit {
       return;
     }
     const form = this.reserveForm;
-    for (const field in this.formErrors) {
-      if (this.formErrors.hasOwnProperty(field)) {
-        this.formErrors[field] = '';
+    for (const field in reservationFormErrors) {
+      if (reservationFormErrors.hasOwnProperty(field)) {
+        reservationFormErrors[field] = '';
         const control = form.get(field);
         if (control && control.dirty && !control.valid) {
-          const messages = this.validationMessages[field];
+          const messages = reservation[field];
           for (const key in control.errors) {
             if (control.errors.hasOwnProperty(key)) {
               this.formErrors[field] += messages[key] + ' ';
@@ -186,7 +172,7 @@ export class DashboardComponent implements OnInit {
 
   initPayment(): void 
   {
-    this.checkAvailability(this.reserveForm.get('fromdatetime').value);
+    this.checkAvailability(this.reserveForm.get('fromdatetime').value,this.reserveForm.get('todatetime').value);
   }
 
   paymentHandler(res: any) {
@@ -219,11 +205,11 @@ export class DashboardComponent implements OnInit {
     $('#overlay').fadeOut(500);
   }
 
-  checkAvailability(fromdatetime:any)
+  checkAvailability(fromdatetime:any,todatetime:any)
   {
     console.log(fromdatetime);
     var parking_id = parseInt((<HTMLInputElement>document.getElementById('parking_id')).value);
-    this.check=new CheckAvailability(fromdatetime,parking_id);
+    this.check=new CheckAvailability(fromdatetime,todatetime,parking_id);
     this.userService.isAvailable(this.check).subscribe((data)=>
     {
       if(data['response']=="true")

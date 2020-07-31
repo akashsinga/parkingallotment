@@ -1,14 +1,25 @@
 <div class="container-fluid mt-5">
   <div class="div">
-    <button class="btn btn-success" (click)="isAdd?showAddForm():showEditForm(null)">Add Parking Lot</button>
+    <div class="alert alert-info">
+      Double Click on a Location to add a Parking Lot
+    </div>
   </div>
   <div class="map-container">
-    <agm-map [zoom]="6" [latitude]="20.5937" [longitude]="78.9629">
+    <agm-map [zoom]="15" [latitude]="latitude" [longitude]="longitude" (mapDblClick)="mapClicked($event)">
+      <agm-marker [latitude]="latitude" [longitude]="longitude" [iconUrl]="icon">
+        <agm-info-window>
+          <strong>Your Location</strong>
+        </agm-info-window>
+      </agm-marker>
       <agm-marker *ngFor="let row of tableData" [latitude]="row.latitude" [longitude]="row.longitude">
         <agm-info-window>
-          <strong>Location: {{row.name}}</strong>
+          <strong><b>Location:</b> {{row.name}}</strong>
           <br>
-          <strong>Price Per Hour: {{row.price_per_hour}}</strong>
+          <strong><b>Owner Name:</b> {{row.owner.name}}</strong>
+          <br>
+          <strong><b>Owner Mobile:</b> {{row.owner.mobile}}</strong>
+          <br>
+          <strong><b>Price Per Hour:</b> {{row.price_per_hour}}</strong>
           <br>
           <br>
           <button class="btn btn-primary table-btn" (click)="showEditForm(row)">Edit</button>
@@ -27,21 +38,38 @@
       <div class="modal-body">
         <form novalidate [formGroup]="lot_form">
           <input class="form-control" [formControlName]="'id'" type="hidden">
-            <label for="price" class="col-form-label text-dark" >Name</label>
+            <label for="price" class="col-form-label text-dark" >Owner Name</label>
             <div class="form-group">
-                <input class="form-control" [formControlName]="'name'"  placeholder="Enter Location Name" type="text" required>
+                <input class="form-control" [formControlName]="'owner_name'"  placeholder="Enter Owner Name" type="text" required>
+                <mat-error *ngIf="addParkingFormErrors.owner_name"><b>*{{addParkingFormErrors.owner_name}}</b></mat-error>
+            </div>
+            <label for="price" class="col-form-label text-dark" >Owner Email</label>
+            <div class="form-group">
+                <input class="form-control" [formControlName]="'owner_email'"  placeholder="Enter Owner Email" type="email" >
+                <mat-error *ngIf="addParkingFormErrors.owner_email"><b>*{{addParkingFormErrors.owner_email}}</b></mat-error>
+            </div>
+            <label for="price" class="col-form-label text-dark" >Owner Mobile</label>
+            <div class="form-group">
+                <input class="form-control" [formControlName]="'owner_mobile'"  placeholder="Enter Owner Mobile" type="text" pattern="[0-9]*">
+                <mat-error *ngIf="addParkingFormErrors.owner_mobile"><b>*{{addParkingFormErrors.owner_mobile}}</b></mat-error>
+            </div>
+            <label for="price" class="col-form-label text-dark" >Location Name</label>
+            <div class="form-group">
+                <input class="form-control" [formControlName]="'name'"  placeholder="Enter Location Name" type="text" >
+                <mat-error *ngIf="addParkingFormErrors.name"><b>*{{addParkingFormErrors.name}}</b></mat-error>
             </div>
             <label for="price" class="col-form-label text-dark">Price per Hour</label>
             <div class="form-group">
-                <input class="form-control" [formControlName]="'price'"  placeholder="Enter Price Per Hour" type="text" required>
+                <input class="form-control" [formControlName]="'price'"  placeholder="Enter Price Per Hour" type="text" pattern="[0-9]*">
+                <mat-error *ngIf="addParkingFormErrors.price"><b>*{{addParkingFormErrors.price}}</b></mat-error>
             </div>
             <label for="price" class="col-form-label text-dark">Latitude</label>
             <div class="form-group">
-                <input class="form-control" [formControlName]="'latitude'"  placeholder="Enter Latitude" type="text" required>
+                <input class="form-control" [formControlName]="'latitude'"  placeholder="Enter Latitude" type="text" readonly>
             </div>
             <label for="price" class="col-form-label text-dark">Longitude</label>
             <div class="form-group">
-                <input class="form-control" [formControlName]="'longitude'"  placeholder="Enter Longitude" type="text" required>
+                <input class="form-control" [formControlName]="'longitude'"  placeholder="Enter Longitude" type="text" readonly>
             </div>
         </form>
       </div>

@@ -1,22 +1,25 @@
-<div class="container-fluid mt-5">
-  <agm-map [zoom]="6" [latitude]="20.5937" [longitude]="78.9629">
-    <agm-marker *ngFor="let row of tableData" [latitude]="row.latitude" [longitude]="row.longitude">
-      <agm-info-window>
-        <strong>Location: {{row.name}}</strong>
-        <br>
-        <strong>Price Per Hour: {{row.price_per_hour}}</strong>
-        <br>
-        <br>
-        <button class="btn btn-success table-btn" (click)="showReserveForm(row)">Reserve</button>
-      </agm-info-window>
-    </agm-marker>
-  </agm-map>
+<div class="user_dashboard">
+  <div class="container-fluid mt-5">
+    <agm-map [zoom]="15" [latitude]="latitude" [longitude]="longitude">
+      <agm-marker [latitude]="latitude" [longitude]="longitude" [iconUrl]="icon"></agm-marker>
+      <agm-marker *ngFor="let row of tableData" [latitude]="row.latitude" [longitude]="row.longitude">
+        <agm-info-window>
+          <strong>Location: {{row.name}}</strong>
+          <br>
+          <strong>Price Per Hour: {{row.price_per_hour}}</strong>
+          <br>
+          <br>
+          <button class="btn btn-success table-btn" (click)="showReserveForm(row)">Reserve</button>
+        </agm-info-window>
+      </agm-marker>
+    </agm-map>
+  </div>
 </div>
 <div class="modal fade" id="reserveForm">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Reserve Parking</h4>
+        <h5 class="modal-title">Reserve Parking</h5>
       </div>
       <div class="modal-body">
         <form novalidate [formGroup]="reserveForm" class="form-horizontal">
@@ -32,7 +35,7 @@
           <label class="col-form-label text-dark">From</label>
           <div class="form-group">
             <input class="form-control" [formControlName]="'fromdatetime'" type="datetime-local" id="fromdatetime" placeholder="Enter From Date"/>
-            <mat-error *ngIf="formErrors.fromdatetime"><b>{{formErrors.fromdatetime}}</b></mat-error>
+            <mat-error *ngIf="formErrors.fromdatetime"><b>*{{formErrors.fromdatetime}}</b></mat-error>
           </div>
           <label class="col-form-label text-dark">To</label>
           <div class="form-group">

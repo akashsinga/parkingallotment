@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,OnInit,ViewChild,ViewEncapsulation} from '@angular/core';
 import { AdminService } from 'src/app/services/admin.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ParkingLot } from 'src/app/models/Location';
 import { ToastrService } from 'ngx-toastr';
+import { MouseEvent,MapsAPILoader } from '@agm/core';
 import Swal from 'sweetalert2';
-
+import { Owner } from 'src/app/models/Owner';
+import { add_lot } from 'src/app/shared/validationMessages';  
+import { addParkingFormErrors } from 'src/app/shared/formErrors';
 declare var $: any;
 @Component({
   selector: 'app-manageparkings',
@@ -14,12 +17,15 @@ declare var $: any;
 export class ManageparkingsComponent implements OnInit {
 
   tableData: [];
-  location: ParkingLot;
   lot_form: FormGroup;
   isAdd:boolean=true;
-  lat:number;
-  lng:number;
- 
+  latitude:number;
+  longitude:number;
+  owner:Owner;
+  parking_lot:ParkingLot;
+  addParkingFormErrors=addParkingFormErrors;
+  icon="../../../../assets/img/blue-dot.png";
+
   constructor(private adminService: AdminService,private formBuilder: FormBuilder,private toaster:ToastrService) {
     this.adminService.getParkingLocations().subscribe((data) => {
       this.tableData = data;
@@ -28,29 +34,87 @@ export class ManageparkingsComponent implements OnInit {
   }
   
   ngOnInit(): void {
+    if (window.navigator && window.navigator.geolocation) {
+      window.navigator.geolocation.getCurrentPosition(
+          position => {
+            this.latitude=position.coords.latitude;
+            this.longitude=position.coords.longitude;
+      });
+    };
+  }
+
+  mapClicked($event: MouseEvent) {
+    this.latitude= $event.coords.lat,
+    this.longitude= $event.coords.lng
+    this.lot_form.setValue({
+      id:'',
+      owner_name:'',
+      owner_email:'',
+      owner_mobile:'',
+      name:'',
+      price:'',
+      latitude:this.latitude,
+      longitude:this.longitude
+    })
+    $('#lot-form').modal('show');
   }
   
   createForm(): void {
     this.lot_form = this.formBuilder.group({
       id:'',
+      owner_name:['',Validators.required],
+      owner_email:['',[Validators.required,Validators.email]],
+      owner_mobile:['',[Validators.required,Validators.pattern]],
       name: ['', Validators.required],
       latitude: ['', Validators.required],
       longitude: ['', Validators.required],
-      price: ['', Validators.required],
+      price: ['', [Validators.required,Validators.pattern]],
     });
-    this.location = {
+    this.owner={
+      name:'',
+      email:'',
+      mobile:''
+    }
+    this.parking_lot={
       name:'',
       latitude:'',
-      longitude: '',
-      price_per_hour: 0,
-    };
+      longitude:'',
+      price_per_hour:0,
+      owner:this.owner
+    }
+    this.lot_form.valueChanges.subscribe((data) =>
+      this.onValueChanged(data)
+    );
+    this.onValueChanged();
+  }
+
+  onValueChanged(data?: any) {
+    if (!this.lot_form) {
+      return;
+    }
+    const form = this.lot_form;
+    for (const field in addParkingFormErrors) {
+      if (addParkingFormErrors.hasOwnProperty(field)) {
+         addParkingFormErrors[field] = '';
+        const control = form.get(field);
+        if (control && control.dirty && !control.valid) {
+          const messages = add_lot[field];
+          for (const key in control.errors) {
+            if (control.errors.hasOwnProperty(key)) {
+              addParkingFormErrors[field] += messages[key] + ' ';
+            }
+          }
+        }
+      }
+    }
   }
 
   onSubmit(): void 
   {
-    this.location=new ParkingLot(this.lot_form.get('name').value,this.lot_form.get('latitude').value,this.lot_form.get('longitude').value,this.lot_form.get('price').value);
-    console.log(this.location);
-    this.adminService.addParkingLocation(this.location).subscribe(
+    this.owner=new Owner(this.lot_form.get('owner_name').value,this.lot_form.get('owner_email').value,this.lot_form.get('owner_mobile').value);
+    this.parking_lot=new ParkingLot(this.lot_form.get('name').value,this.lot_form.get('latitude').value,this.lot_form.get('longitude').value,this.lot_form.get('price').value,this.owner);
+    console.log(this.parking_lot);
+    this.adminService.addParkingLocation(this.parking_lot).subscribe(
       (data) => {
         console.log(data);
         this.toaster.success(data['response']);
@@ -79,6 +143,9 @@ export class ManageparkingsComponent implements OnInit {
     document.getElementById('form-head').innerText="Edit Parking Lot";
     this.lot_form.setValue({
       id:location.id,
+      owner_name:location.owner.name,
+      owner_email:location.owner.email,
+      owener_mobile:location.owner.mobile,
       name:location.name,
       latitude:location.latitude,
       price:location.price_per_hour,
@@ -89,9 +156,10 @@ export class ManageparkingsComponent implements OnInit {
 
   editParkingLot()
   {
-    this.location=new ParkingLot(this.lot_form.get('name').value,this.lot_form.get('latitude').value,this.lot_form.get('longitude').value,this.lot_form.get('price').value);
+    this.owner=new Owner(this.lot_form.get('owner_name').value,this.lot_form.get('owner_email').value,this.lot_form.get('owner_mobile').value);
+    this.parking_lot=new ParkingLot(this.lot_form.get('name').value,this.lot_form.get('latitude').value,this.lot_form.get('longitude').value,this.lot_form.get('price').value,this.owner);
     var id=this.lot_form.get('id').value;
-    this.adminService.editParkingLocation(this.location,id).subscribe(
+    this.adminService.editParkingLocation(this.parking_lot,id).subscribe(
       (data) => {
         console.log(data);
         this.toaster.success(data['response']);

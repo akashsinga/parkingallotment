@@ -25,6 +25,7 @@ import { AdminlayoutComponent } from './components/admin/adminlayout/adminlayout
 import { NavbarComponent } from './components/admin/navbar/navbar.component';
 import { ManageparkingsComponent } from './components/admin/manageparkings/manageparkings.component';
 import { MybookingsComponent } from './components/user/mybookings/mybookings.component';
+import { ManageusersComponent } from './components/admin/manageusers/manageusers.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { MybookingsComponent } from './components/user/mybookings/mybookings.com
     NavbarComponent,
     ManageparkingsComponent,
     MybookingsComponent,
+    ManageusersComponent,
   ],
   imports: [
     BrowserModule,
