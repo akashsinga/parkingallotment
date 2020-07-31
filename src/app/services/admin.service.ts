@@ -35,4 +35,14 @@ export class AdminService {
   {
     return this.httpclient.get(this.url+"/parkings/delete/"+id);
   }
+
+  getUsers():Observable<any>
+  {
+    return this.httpclient.get(this.url+"/users");
+  }
+  
+  editUser(id:number,role:string):Observable<any>
+  {
+    return this.httpclient.post(this.url+"/users/edit/"+id,role);
+  }
 }

@@ -1,9 +1,4 @@
 <div class="container-fluid mt-5">
-  <div class="div">
-    <div class="alert alert-info">
-      Double Click on a Location to add a Parking Lot
-    </div>
-  </div>
   <div class="map-container">
     <agm-map [zoom]="15" [latitude]="latitude" [longitude]="longitude" (mapDblClick)="mapClicked($event)">
       <agm-marker [latitude]="latitude" [longitude]="longitude" [iconUrl]="icon">
@@ -19,7 +14,7 @@
           <br>
           <strong><b>Owner Mobile:</b> {{row.owner.mobile}}</strong>
           <br>
-          <strong><b>Price Per Hour:</b> {{row.price_per_hour}}</strong>
+          <strong><b>Price Per Hour:</b> ₹{{row.price_per_hour}}</strong>
           <br>
           <br>
           <button class="btn btn-primary table-btn" (click)="showEditForm(row)">Edit</button>
