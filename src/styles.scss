@@ -48,6 +48,7 @@ header nav ul li a {
   color: #fff;
   text-decoration: none;
   display: block;
+  transition: 0.8s;
 }
 header nav ul .dropdown:hover,
 header nav ul li a:hover,
@@ -83,12 +84,6 @@ header nav ul li a.active {
   header nav.active {
     left: 0;
   }
-  #overview{
-    margin-top: 170px;
-  }
-  .map-container{
-    margin-top:250px;
-  }
   header nav ul {
     display: block;
     text-align: center;
@@ -99,6 +94,12 @@ header nav ul li a.active {
   #overview .card{
     margin:10px;
   }
+}
+#overview{
+  transition: 1s;
+}
+#overview.active{
+  margin-top: 170px;
 }
 #overview i {
   margin-top: -50px;
@@ -140,6 +141,17 @@ header nav ul li a.active {
   background-color:gainsboro;
   display:flex;
   justify-content: center;
+}
+
+.map-container.active,
+.user_dashboard.active{
+  margin-top:250px;
+  transition: 1s;
+}
+
+.map-container,
+.user_dashboard{
+  transition: 1s;
 }
 
 .form-box{
