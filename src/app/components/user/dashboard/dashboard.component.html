@@ -4,9 +4,9 @@
       <agm-marker [latitude]="latitude" [longitude]="longitude" [iconUrl]="icon"></agm-marker>
       <agm-marker *ngFor="let row of tableData" [latitude]="row.latitude" [longitude]="row.longitude">
         <agm-info-window>
-          <strong><b>Location:</b>{{row.name}}</strong>
+          <strong><b>Location: </b>{{row.name}}</strong>
           <br>
-          <strong><b>Price Per Hour:</b>₹{{row.price_per_hour}}</strong>
+          <strong><b>Price Per Hour: </b>₹{{row.price_per_hour}}</strong>
           <br>
           <br>
           <button class="btn btn-success table-btn" (click)="showReserveForm(row)">Reserve</button>

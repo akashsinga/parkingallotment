@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewChild,ElementRef } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import * as pdf from 'jspdf';
 declare var $:any;
@@ -12,6 +12,8 @@ export class MybookingsComponent implements OnInit {
   tableData:[];
   errMsg:string;
   bookingData:any;
+  @ViewChild('dataTable') table:ElementRef;
+  dataTable:any;
   constructor(private userService:UserService) {
     this.userService.getPreviousBookings().subscribe((data)=>{
       if(data.hasOwnProperty('response'))
@@ -26,6 +28,13 @@ export class MybookingsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  ngAfterViewInit(){
+    setTimeout(()=>{
+      this.dataTable=$(this.table.nativeElement);
+      this.dataTable.dataTable();
+    },1000);
   }
 
   showDetails(booking:any)

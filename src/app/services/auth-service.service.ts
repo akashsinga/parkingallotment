@@ -20,9 +20,13 @@ export class AuthService {
   }
 
   logoutUser() {
+    $('#overlay').show();
     console.log('cleared');
     localStorage.clear();
-    this.router.navigate(['']);
+    setTimeout(()=>{
+      $('#overlay').hide();
+      this.router.navigate(['']);
+    },2000)
   }
 
   isUser():boolean

@@ -202,7 +202,7 @@ export class DashboardComponent implements OnInit {
         }
       );
     });
-    $('#overlay').fadeOut(500);
+    $('#overlay').hide();
   }
 
   checkAvailability(fromdatetime:any,todatetime:any)

@@ -51,10 +51,15 @@ header nav ul li a {
   transition: 0.8s;
 }
 header nav ul .dropdown:hover,
-header nav ul li a:hover,
 header nav ul li a.active {
   text-decoration: none;
-  color: #fff;
+  color: #eeeeee;
+  border-bottom: 5px solid;
+  background: #2196f3;
+}
+header nav ul li a:hover{
+  text-decoration: none;
+  color: #cccccc;
   background: #2196f3;
 }
 .menu-toggle {
@@ -110,14 +115,14 @@ header nav ul li a.active {
 #overview .card {
   border-radius: 0;
   box-shadow: 5px 5px 15px #e74c3c;
-  transition: all 0.3s ease-in;
-  -webkit-transition: all 0.3s ease-in;
-  -moz-transition: all 0.3s ease-in;
+  transition: all 0.8s ease-in-out;
+  -webkit-transition: all 0.8s ease-in-out;
+  -moz-transition: all 0.8s ease-in-out;
 }
 #overview .card:hover {
   background: #e74c3c;
   color: #fff;
-  border-radius: 5px;
+  border-radius: 25px;
   border: none;
   box-shadow: 5px 5px 10px #9e9e9e;
 }
@@ -141,6 +146,18 @@ header nav ul li a.active {
   background-color:gainsboro;
   display:flex;
   justify-content: center;
+  animation-name: fadeIn;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeIn{
+  from{
+    right:-2000px;
+  }
+  to{
+    right:0px;
+  }
 }
 
 .map-container.active,
@@ -210,6 +227,7 @@ header nav ul li a.active {
 
 .forget-link, .register-link{
   font-weight: bold;
+  display: inline-block;
 }
 
 .forget-link:hover, .register-link:hover{

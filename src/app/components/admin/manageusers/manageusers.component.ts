@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild,ElementRef,OnInit } from '@angular/core';
 import { AdminService } from 'src/app/services/admin.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -9,7 +9,8 @@ declare var $:any;
   styleUrls: ['./manageusers.component.scss']
 })
 export class ManageusersComponent implements OnInit {
-
+  @ViewChild('dataTable') table:ElementRef;
+  dataTable:any;
   tableData=[];
   userEditForm:FormGroup;
   constructor(private adminService:AdminService,private toaster:ToastrService,private fb:FormBuilder) { 
@@ -23,6 +24,12 @@ export class ManageusersComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  ngAfterViewInit(){
+    setTimeout(()=>{
+      this.dataTable=$(this.table.nativeElement);
+      this.dataTable.dataTable();
+    },1000);
+  }
   createForm()
   {
     this.userEditForm=this.fb.group({

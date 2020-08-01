@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef,ViewChild,OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth-service.service';
 import { AdminService } from 'src/app/services/admin.service';
@@ -14,6 +14,9 @@ export class DashboardComponent implements OnInit {
   locations_count:number;
   bookings_count:number;
   tableData:[];
+  @ViewChild('dataTable') table:ElementRef;
+  dataTable:any;
+
   constructor(private router:Router,private authService:AuthService,private adminService:AdminService) {
     this.adminService.getDashboardCounts().subscribe((data)=>{
       this.user_count=data['user_count'];
@@ -24,6 +27,14 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  ngAfterViewInit()
+  {
+    setTimeout(()=>{
+      this.dataTable=$(this.table.nativeElement);
+      this.dataTable.dataTable();
+    },1000);
   }
 
   showDetails(booking:any)

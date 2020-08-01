@@ -21,6 +21,13 @@ $(document).ready(function(){
             },1000);
         }   
     })
+    if($(window).width()<=991)
+    {
+        $('a').click(function(){
+            clicks++;
+            $('nav').toggleClass('active');
+        })
+    }
 })
 window.onload = function () {
 $("#overlay").fadeOut(500);
