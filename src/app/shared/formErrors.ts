@@ -21,3 +21,7 @@ export const loginFormErrors={
     username: '',
     password: '',
 };
+export const resetPasswordFormErrors={
+    password:'',
+    confirmpassword:''
+};

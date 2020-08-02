@@ -4,6 +4,8 @@ import { RegisterRequest } from '../Dto/RegisterRequest';
 import { Observable } from 'rxjs';
 import { LoginRequest } from '../Dto/LoginRequest';
 import { Router } from '@angular/router';
+import { VerifyCode } from '../Dto/VerifyCode';
+import { ResetPassword } from '../Dto/ResetPassword';
 @Injectable({
   providedIn: 'root',
 })
@@ -66,5 +68,25 @@ export class AuthService {
   {
     console.log(this.url+"register/checkuser/"+username);
     return this.httpClient.post(this.url+"register/checkuser",username);
+  }
+
+  sendVerificationCode(email:string):Observable<any>
+  {
+    return this.httpClient.post(this.url+"forgotpassword",email);
+  }
+
+  checkEmailExists(email:string):Observable<any>
+  {
+    return this.httpClient.post(this.url+"register/checkemail",email);
+  }
+
+  verifyCode(verify:VerifyCode):Observable<any>
+  {
+    return this.httpClient.post(this.url+"forgotpassword/verify",verify);
+  }
+  
+  resetPassword(reset:ResetPassword):Observable<any>
+  {
+    return this.httpClient.post(this.url+"forgotpassword/reset",reset);
   }
 }

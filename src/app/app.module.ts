@@ -26,6 +26,7 @@ import { NavbarComponent } from './components/admin/navbar/navbar.component';
 import { ManageparkingsComponent } from './components/admin/manageparkings/manageparkings.component';
 import { MybookingsComponent } from './components/user/mybookings/mybookings.component';
 import { ManageusersComponent } from './components/admin/manageusers/manageusers.component';
+import { ForgotpasswordComponent } from './components/forgotpassword/forgotpassword.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { ManageusersComponent } from './components/admin/manageusers/manageusers
     ManageparkingsComponent,
     MybookingsComponent,
     ManageusersComponent,
+    ForgotpasswordComponent,
   ],
   imports: [
     BrowserModule,

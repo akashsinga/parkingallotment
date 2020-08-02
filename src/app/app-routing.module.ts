@@ -9,11 +9,13 @@ import { AdminlayoutComponent } from './components/admin/adminlayout/adminlayout
 import { ManageparkingsComponent } from './components/admin/manageparkings/manageparkings.component';
 import { MybookingsComponent } from './components/user/mybookings/mybookings.component';
 import { ManageusersComponent } from './components/admin/manageusers/manageusers.component';
+import { ForgotpasswordComponent } from './components/forgotpassword/forgotpassword.component';
 
 const routes: Routes = [
   //auth routes
   { path: '', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'forgot',component:ForgotpasswordComponent},
   //user routes
   {
     path: 'user',

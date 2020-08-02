@@ -4,6 +4,7 @@ import { RegisterRequest } from '../../Dto/RegisterRequest';
 import { AuthService } from '../../services/auth-service.service';
 import { Router } from '@angular/router';
 import { uniqueUsernameValidator } from '../../shared/unique-username-validator.directive';
+import { uniqueEmailValidator } from '../../shared/unique-email-validator.directive';
 import { ToastrService } from 'ngx-toastr';
 import { registerFormErrors } from 'src/app/shared/formErrors';
 import { register } from 'src/app/shared/validationMessages';
@@ -39,7 +40,7 @@ export class RegisterComponent implements OnInit {
         fullname: ['',[Validators.required,Validators.minLength(2),Validators.maxLength(25)]],
         username: ['',[Validators.required,Validators.minLength(2),Validators.maxLength(25),],[uniqueUsernameValidator(this.authService)]],
         mobile: ['', [Validators.required, Validators.pattern]],
-        email: ['', [Validators.required, Validators.email]],
+        email: ['', [Validators.required, Validators.email],[uniqueEmailValidator(this.authService)]],
         password: ['', [Validators.required, Validators.minLength(6)]],
         confirmpassword: ['',[Validators.required, Validators.minLength(6)]],
         type: 'user',

@@ -45,6 +45,7 @@ export const register={
     email: {
         required: 'Email is required.',
         email: 'Email not in valid format.',
+        notunique: 'Email already exists'
     },
     password: {
         required: 'Password is required',
@@ -66,4 +67,14 @@ export const reservation={
         lessthan: 'To Date Time should be greater than From Date Time',
         required: 'To Date Time is required',
     },
+}
+export const resetPasswordForm={
+    password: {
+        required: 'Password is required',
+        minlength: 'Password must be at least 6 characters long.',
+    },
+    confirmpassword: {
+        required: 'Confirm Password is required',
+        mustMatch: 'Password and Confirm Password doesnot match',
+    }
 }
