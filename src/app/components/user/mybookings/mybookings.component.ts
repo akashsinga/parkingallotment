@@ -1,6 +1,7 @@
 import { Component, OnInit,ViewChild,ElementRef } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 import * as pdf from 'jspdf';
+import Swal from 'sweetalert2';
 declare var $:any;
 @Component({
   selector: 'app-mybookings',
@@ -86,9 +87,40 @@ export class MybookingsComponent implements OnInit {
     doc.save(booking.booking_date+"_"+booking.id);
   }
 
+  checkTime(booking:any):boolean
+  {
+    if(booking.status=="cancelled")
+      return false;
+    return new Date(booking.fromdatetime) > new Date()?true:false;
+  }
+
   diff_hours(dt2, dt1) {
     var diff = (dt2.getTime() - dt1.getTime()) / 1000;
     diff /= 60 * 60;
     return Math.abs(diff);
+  }
+
+  cancelBooking(id:number)
+  {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you really want to cancel your reservation?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: 'green',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Cancel it!'
+    }).then((result) => {
+      if (result.value) {
+        $('#overlay').show();
+        this.userService.cancelBooking(id).subscribe((data)=>{
+          Swal.fire('Reservation Canceled!',data['response'],'success');
+          setTimeout(()=>{
+            $('#overlay').show();
+            window.location.reload();
+          },3000);
+        });
+      }
+    })
   }
 }

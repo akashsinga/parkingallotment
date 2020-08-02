@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ParkingLot } from '../models/Location';
+import { GetReports } from '../Dto/GetReports';
 
 @Injectable({
   providedIn: 'root'
@@ -44,5 +45,10 @@ export class AdminService {
   editUser(id:number,role:string):Observable<any>
   {
     return this.httpclient.post(this.url+"/users/edit/"+id,role);
+  }
+
+  getReports(reports:GetReports):Observable<any>
+  {
+    return this.httpclient.post(this.url+"/reports",reports);
   }
 }

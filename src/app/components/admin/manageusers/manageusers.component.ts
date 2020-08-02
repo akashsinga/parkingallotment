@@ -59,6 +59,7 @@ export class ManageusersComponent implements OnInit {
     var role=this.userEditForm.get('role').value;
     this.adminService.editUser(id,role).subscribe((data)=>{
       this.toaster.success('Modified User Role');
+      $('#userEditForm').modal('hide');
     })
   }
 }

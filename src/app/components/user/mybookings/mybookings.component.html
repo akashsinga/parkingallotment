@@ -1,72 +1,75 @@
-<div class="container-fluid mt-5">
-  <div class="row mb-5">
-    <div class="col text-left mb-3">
-      <h1 class="text-dark">Previous Reservations</h1>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-body">
-      <div class="alert alert-danger" *ngIf="tableData?.length == 0">
-        You Haven't made any Reservations Yet ! 
+<div class="user_dashboard">
+  <div class="container-fluid mt-5 user_dashboard">
+    <div class="row mb-5">
+      <div class="col text-left mb-3">
+        <h1 class="text-dark">Previous Reservations</h1>
       </div>
-      <div class="table-responsive">
-        <table #dataTable class="table table-striped table-bordered" style="width: 100%;">
-          <thead class="text-white">
-            <tr class="bg-dark">
-              <td>
-                #
-              </td>
-              <th>
-                Booking ID
-              </th>
-              <th>
-                Booking Date
-              </th>
-              <th>
-                Area
-              </th>
-              <th>
-                Cost
-              </th>
-              <th>
-                Status
-              </th>
-              <th>
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let booking of tableData;let i=index">
-              <td>
-                {{i+1}}
-              </td>
-              <td>
-                {{ booking.id }}
-              </td>
-              <td>
-                {{ booking.booking_date }}
-              </td>
-              <td>
-                {{ booking.location.name }}
-              </td>
-              <td>
-                ₹ {{ booking.cost }}
-              </td>
-              <td>
-                {{booking.status}}
-              </td>
-              <td>
-                <button class="btn btn-sm btn-primary table-btn" (click)="showDetails(booking)">
-                  View Details
-                </button>
-                <button class="btn btn-sm btn-info table-btn" (click)="downloadReceipt(booking)">
-                  Download Receipt
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="alert alert-danger" *ngIf="tableData?.length == 0">
+          You Haven't made any Reservations Yet ! 
+        </div>
+        <div class="table-responsive">
+          <table #dataTable class="table table-striped table-bordered" style="width: 100%;">
+            <thead class="text-white">
+              <tr class="bg-dark">
+                <td>
+                  #
+                </td>
+                <th>
+                  Booking ID
+                </th>
+                <th>
+                  Booking Date
+                </th>
+                <th>
+                  Area
+                </th>
+                <th>
+                  Cost
+                </th>
+                <th>
+                  Status
+                </th>
+                <th>
+                  Actions
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let booking of tableData;let i=index">
+                <td>
+                  {{i+1}}
+                </td>
+                <td>
+                  {{ booking.id }}
+                </td>
+                <td>
+                  {{ booking.booking_date }}
+                </td>
+                <td>
+                  {{ booking.location.name }}
+                </td>
+                <td>
+                  ₹ {{ booking.cost }}
+                </td>
+                <td>
+                  {{booking.status}}
+                </td>
+                <td>
+                  <button class="btn btn-sm btn-primary table-btn" (click)="showDetails(booking)">
+                    View Details
+                  </button>
+                  <button class="btn btn-sm btn-info table-btn" (click)="downloadReceipt(booking)">
+                    Download Receipt
+                  </button>
+                  <button class="btn btn-sm btn-danger table-btn" *ngIf="checkTime(booking)" (click)="cancelBooking(booking.id)">Cancel</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

@@ -10,6 +10,7 @@ import { ManageparkingsComponent } from './components/admin/manageparkings/manag
 import { MybookingsComponent } from './components/user/mybookings/mybookings.component';
 import { ManageusersComponent } from './components/admin/manageusers/manageusers.component';
 import { ForgotpasswordComponent } from './components/forgotpassword/forgotpassword.component';
+import { ReportsComponent } from './components/admin/reports/reports.component';
 
 const routes: Routes = [
   //auth routes
@@ -32,7 +33,8 @@ const routes: Routes = [
     children: [
       { path: 'dashboard', component: AdminDashboard },
       { path: 'parkings/lots', component: ManageparkingsComponent },
-      { path: 'users',component:ManageusersComponent }
+      { path: 'users',component:ManageusersComponent },
+      { path: 'reports',component:ReportsComponent}
     ],
   },
 ];

@@ -6,6 +6,7 @@ $(document).ready(function(){
         {
             $('.map-container').toggleClass('active');
             $('.user_dashboard').toggleClass('active');
+            $('.admin_users').toggleClass('active');
             $('#overview').toggleClass('active');
             setTimeout(()=>{
                 $('nav').toggleClass('active');
@@ -17,6 +18,7 @@ $(document).ready(function(){
             setTimeout(()=>{
                 $('.map-container').toggleClass('active');
                 $('.user_dashboard').toggleClass('active');
+                $('.admin_users').toggleClass('active');
                 $('#overview').toggleClass('active');
             },1000);
         }   

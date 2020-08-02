@@ -13,7 +13,7 @@ export class DashboardComponent implements OnInit {
   parkings_count:number;
   locations_count:number;
   bookings_count:number;
-  tableData:[];
+  tableData=[];
   @ViewChild('dataTable') table:ElementRef;
   dataTable:any;
 

@@ -31,4 +31,9 @@ export class UserService {
   {
     return this.httpclient.post(this.url+"parkings/lots/available",check);
   }
+
+  cancelBooking(id:number):Observable<any>
+  {
+    return this.httpclient.get(this.url+"bookings/cancel/"+id);
+  }
 }
