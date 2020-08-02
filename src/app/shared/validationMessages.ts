@@ -53,9 +53,10 @@ export const register={
     },
     confirmpassword: {
         required: 'Confirm Password is required',
+        minlength: 'Password must be at least 6 characters long.',
         mustMatch: 'Password and Confirm Password doesnot match',
     },
-}
+};
 export const reservation={
     fromdatetime: {
         required: 'From Date Time is required',
@@ -67,14 +68,15 @@ export const reservation={
         lessthan: 'To Date Time should be greater than From Date Time',
         required: 'To Date Time is required',
     },
-}
-export const resetPasswordForm={
+};
+export const resetPassword={
     password: {
         required: 'Password is required',
         minlength: 'Password must be at least 6 characters long.',
     },
     confirmpassword: {
         required: 'Confirm Password is required',
+        minlength: 'Password must be at least 6 characters long.',
         mustMatch: 'Password and Confirm Password doesnot match',
     }
-}
+};

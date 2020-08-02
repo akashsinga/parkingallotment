@@ -77,6 +77,7 @@ export class RegisterComponent implements OnInit {
   }
 
   checkPasswords(controlName: string, matchingControlName: string) {
+    console.log('Checking Passwords');
     return (formGroup: FormGroup) => {
       const control = formGroup.controls[controlName];
       const matchingControl = formGroup.controls[matchingControlName];

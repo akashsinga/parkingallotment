@@ -3,10 +3,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/services/auth-service.service';
 import { VerifyCode } from 'src/app/Dto/VerifyCode';
-import { resetPasswordForm } from 'src/app/shared/validationMessages';
+import { resetPassword } from 'src/app/shared/validationMessages';
 import { resetPasswordFormErrors } from 'src/app/shared/formErrors';
 import { ResetPassword } from 'src/app/Dto/ResetPassword';
-import { ThrowStmt } from '@angular/compiler';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 declare var $:any;
@@ -22,6 +21,7 @@ export class ForgotpasswordComponent implements OnInit {
   verify:VerifyCode;
   passwordReset:FormGroup;
   formerrors=resetPasswordFormErrors;
+
   reset:ResetPassword;
   constructor(private fb:FormBuilder,private toaster:ToastrService,private authService:AuthService,private router:Router) {
     this.createForm();
@@ -33,11 +33,13 @@ export class ForgotpasswordComponent implements OnInit {
       email:'',
       code:''
     });
-    this.passwordReset=this.fb.group({
-      password:['',Validators.required, Validators.minLength(6)],
-      confirmpassword:['',Validators.required, Validators.minLength(6)]
-    },{validator:this.checkPasswords('password','confirmpassword')});
-    
+    this.passwordReset = this.fb.group({
+        password: ['', [Validators.required, Validators.minLength(6)]],
+        confirmpassword: ['',[Validators.required, Validators.minLength(6)]],
+      },
+      { validator: this.checkPasswords('password', 'confirmpassword')},
+    );
+
     this.passwordReset.valueChanges.subscribe((data) =>
       this.onValueChanged(data)
     );
@@ -55,7 +57,7 @@ export class ForgotpasswordComponent implements OnInit {
         resetPasswordFormErrors[field] = '';
         const control = form.get(field);
         if (control && control.dirty && !control.valid) {
-          const messages = resetPasswordForm[field];
+          const messages = resetPassword[field];
           for (const key in control.errors) {
             if (control.errors.hasOwnProperty(key)) {
               resetPasswordFormErrors[field] += messages[key] + ' ';
@@ -84,6 +86,7 @@ export class ForgotpasswordComponent implements OnInit {
   {
     console.log('inside');
     this.verify=new VerifyCode(this.forgotPassword.get('email').value,this.forgotPassword.get('code').value);
+    console.log(this.verify);
       this.authService.verifyCode(this.verify).subscribe((data)=>{
         if(data['response']=="true")
         {
@@ -97,6 +100,7 @@ export class ForgotpasswordComponent implements OnInit {
   }
 
   checkPasswords(controlName: string, matchingControlName: string) {
+    console.log('Checking Passwords');
     return (formGroup: FormGroup) => {
       const control = formGroup.controls[controlName];
       const matchingControl = formGroup.controls[matchingControlName];
@@ -113,6 +117,7 @@ export class ForgotpasswordComponent implements OnInit {
 
   resetPassword()
   {
+    $('#overlay').show();
     this.reset=new ResetPassword(this.forgotPassword.get('email').value,this.passwordReset.get('password').value);
     this.authService.resetPassword(this.reset).subscribe((data)=>{
       Swal.fire({
@@ -124,7 +129,14 @@ export class ForgotpasswordComponent implements OnInit {
       this.toaster.warning('Redirecting to Login');
       setTimeout(()=>{
         this.router.navigate(['']);
+        $('#overlay').hide();
       },2000);
     })
+  }
+
+  showCodeInput()
+  {
+    this.codeSent=true;
+    $('.verification_code').css('display','block');
   }
 }

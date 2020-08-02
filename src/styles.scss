@@ -147,16 +147,16 @@ header nav ul li a:hover{
   display:flex;
   justify-content: center;
   animation-name: fadeIn;
-  animation-duration: 1s;
+  animation-duration: 3s;
   animation-fill-mode: forwards;
 }
 
 @keyframes fadeIn{
   from{
-    right:-2000px;
+    opacity:0;
   }
   to{
-    right:0px;
+    opacity:1;
   }
 }
 

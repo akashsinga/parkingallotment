@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit() {
+    $('#overlay').show();
     this.loginRequest=new LoginRequest(this.loginForm.get('username').value,this.loginForm.get('password').value);
     this.authService.loginUser(this.loginRequest).subscribe((data) => {
         if(data.hasOwnProperty('id')) 
@@ -61,6 +62,7 @@ export class LoginComponent implements OnInit {
         {
           this.toaster.error(data['response']);
         }
+        $('#overlay').hide();
       },
       (error) => 
       {
