@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { reservation } from 'src/app/shared/validationMessages';
 import { reservationFormErrors } from 'src/app/shared/formErrors';
 import Swal from 'sweetalert2';
-declare var $;
+declare var $:any;
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -177,6 +177,7 @@ export class DashboardComponent implements OnInit {
 
   paymentHandler(res: any) {
     this.zone.run(() => {
+      $('#overlay').show();
       var id = JSON.parse(localStorage.getItem('user'))['id'];
       var parking_id = parseInt((<HTMLInputElement>document.getElementById('parking_id')).value);
       var fromdatetime = this.reserveForm.get('fromdatetime').value;
@@ -184,10 +185,10 @@ export class DashboardComponent implements OnInit {
       var cost = this.cost;
       var paymentId = res['razorpay_payment_id'];
       this.reservation=new ReserveParking(id,parking_id,fromdatetime,todatetime,paymentId,cost,this.addToWaiting?"waiting":"reserved");
-      $('#overlay').show();
       this.userService.reserveParking(this.reservation).subscribe(
         (data) => {
           $('#reserveForm').modal('hide');
+          $('#overlay').hide();
           Swal.fire({
             icon: 'success',
             title: 'Parking Successfully Reserved',
@@ -196,10 +197,11 @@ export class DashboardComponent implements OnInit {
           })
         },
         (error) => {
+          $('#overlay').hide();
           console.log(error);
+          this.toaster.error("Parking Reservation Failed");
         }
       );
-      $('#overlay').hide();
     });
   }
 
