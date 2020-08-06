@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Mulish&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Acme&display=swap');
 * {
   margin: 0;
   padding: 0;
@@ -18,7 +19,7 @@ header {
   top: 0;
   left: 0;
   padding: 0 100px;
-  background: #262626;
+  background: linear-gradient(to right, rgb(15, 32, 39), rgb(32, 58, 67), rgb(44, 83, 100));
   width: 100%;
   box-sizing: border-box;
 }
@@ -27,6 +28,7 @@ header .logo {
   height: 50px;
   line-height: 50px;
   font-size: 24px;
+  font-family: 'Acme';
   float: left;
   font-weight: bold;
 }
@@ -59,7 +61,7 @@ header nav ul li a.active {
 }
 header nav ul li a:hover{
   text-decoration: none;
-  color: #cccccc;
+  color: white;
   background: #2196f3;
 }
 .menu-toggle {
@@ -308,6 +310,7 @@ body {
 }
 html{
   overflow-y: scroll;
+  overflow-x:hidden;
 }
 
 mat-error{

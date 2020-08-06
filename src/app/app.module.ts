@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -8,10 +7,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { DataTablesModule } from 'angular-datatables';
-import { MatTableModule } from '@angular/material/table';
-import { MatSelectModule } from '@angular/material/select';
 import { AgmCoreModule } from '@agm/core';
 //component imports
 import { AppComponent } from './app.component';
@@ -53,12 +49,8 @@ import { ReportsComponent } from './components/admin/reports/reports.component';
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatInputModule,
     HttpClientModule,
-    MatToolbarModule,
     DataTablesModule,
-    MatTableModule,
-    MatSelectModule,
     ToastrModule.forRoot({
       timeOut:3000,
       positionClass:'toast-top-right',

@@ -126,10 +126,10 @@ export class ForgotpasswordComponent implements OnInit {
         showConfirmButton: false,
         timer: 1500
       })
-      this.toaster.warning('Redirecting to Login');
+      this.toaster.info('Redirecting to Login');
       setTimeout(()=>{
-        this.router.navigate(['']);
         $('#overlay').hide();
+        this.router.navigate(['']);
       },2000);
     })
   }

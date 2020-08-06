@@ -51,4 +51,9 @@ export class AdminService {
   {
     return this.httpclient.post(this.url+"/reports",reports);
   }
+
+  cancelBooking(id:any):Observable<any>
+  {
+    return this.httpclient.get(this.url+"/bookings/cancel/"+id);
+  }
 }

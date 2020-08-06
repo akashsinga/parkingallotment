@@ -2,6 +2,7 @@ import { Component, ElementRef,ViewChild,OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth-service.service';
 import { AdminService } from 'src/app/services/admin.service';
+import Swal from 'sweetalert2';
 declare var $:any;
 @Component({
   selector: 'app-dashboard',
@@ -49,5 +50,29 @@ export class DashboardComponent implements OnInit {
     document.getElementById('to_datetime').innerText=booking.todatetime;
     document.getElementById('cost').innerText="₹ "+booking.cost;
     $('#booking_details').modal('show');
+  }
+
+  cancelReservation(booking:any)
+  {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you really want to cancel the reservation?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: 'green',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Cancel it!'
+    }).then((result) => {
+      if (result.value) {
+        $('#overlay').show();
+        this.adminService.cancelBooking(booking.id).subscribe((data)=>{
+          Swal.fire('Reservation Canceled!',data['response'],'success');
+          setTimeout(()=>{
+            $('#overlay').show();
+            window.location.reload();
+          },3000);
+        });
+      }
+    })
   }
 }

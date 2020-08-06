@@ -31,6 +31,7 @@ export class ManageparkingsComponent implements OnInit {
       this.tableData = data;
     });
     this.createForm();
+    this.toaster.info("Double Click on the map to Add a Parking Lot");
   }
   
   ngOnInit(): void {
@@ -44,19 +45,9 @@ export class ManageparkingsComponent implements OnInit {
   }
 
   mapClicked($event: MouseEvent) {
-    this.latitude= $event.coords.lat,
-    this.longitude= $event.coords.lng
-    this.lot_form.setValue({
-      id:'',
-      owner_name:'',
-      owner_email:'',
-      owner_mobile:'',
-      name:'',
-      price:'',
-      latitude:this.latitude,
-      longitude:this.longitude
-    })
-    $('#lot-form').modal('show');
+    this.latitude= $event.coords.lat;
+    this.longitude= $event.coords.lng;
+    this.showAddForm(this.latitude,this.longitude);
   }
   
   createForm(): void {
@@ -129,10 +120,20 @@ export class ManageparkingsComponent implements OnInit {
     );
   }
 
-  showAddForm():void
+  showAddForm(latitude:any,longitude:any):void
   {
     this.isAdd=true;
     this.lot_form.reset();
+    this.lot_form.setValue({
+      id:'',
+      owner_name:'',
+      owner_email:'',
+      owner_mobile:'',
+      name:'',
+      price:'',
+      latitude:latitude,
+      longitude:longitude
+    })
     document.getElementById('form-head').innerText="Add Parking Lot";
     $('#lot-form').modal('show');
   }
@@ -145,7 +146,7 @@ export class ManageparkingsComponent implements OnInit {
       id:location.id,
       owner_name:location.owner.name,
       owner_email:location.owner.email,
-      owener_mobile:location.owner.mobile,
+      owner_mobile:location.owner.mobile,
       name:location.name,
       latitude:location.latitude,
       price:location.price_per_hour,

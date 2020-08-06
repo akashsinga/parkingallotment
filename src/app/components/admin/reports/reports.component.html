@@ -22,7 +22,8 @@
             </form>
             <hr>
           <div class="table-responsive" *ngIf="tableData.length!=0">
-            <table #dataTable class="table table-striped table-bordered" style="width: 100%;">
+            <button class="btn btn-sm btn-success ml-auto" (click)="downloadReports()">Download Reports</button>
+            <table id="reports" #dataTable class="table table-striped table-bordered" style="width: 100%;">
               <thead class="text-white">
                 <tr class="bg-dark">
                   <td>
@@ -42,6 +43,9 @@
                   </th>
                   <th>
                     Area
+                  </th>
+                  <th>
+                    Status
                   </th>
                 </tr>
               </thead>
@@ -64,6 +68,9 @@
                   </td>
                   <td>
                       {{row.location.name}}
+                  </td>
+                  <td>
+                    {{row.status}}
                   </td>
                 </tr>
               </tbody>

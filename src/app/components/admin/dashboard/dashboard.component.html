@@ -38,8 +38,8 @@
 </section>
 <div class="container-fluid mt-5">
   <div class="row mb-5">
-    <div class="col text-center mb-3">
-      <h2>Latest Reservations</h2>
+    <div class="col mb-3">
+      <h2 class="title-text"><p class="heading">Latest Reservations</p></h2>
     </div>
   </div>
   <div class="card">
@@ -48,7 +48,7 @@
         <div class="alert alert-danger" *ngIf="tableData.length===0">
           No Reservations yet !
         </div>
-        <table #dataTable class="table table-bordered table-hover table-striped">
+        <table *ngIf="tableData.length!=0" #dataTable class="table table-bordered table-hover table-striped">
           <thead>
             <tr class="bg-dark text-white">
               <th>
@@ -90,6 +90,7 @@
               </td>
               <td>
                 <button class="btn btn-sm btn-info" (click)="showDetails(booking)">View Details</button>
+                <button class="btn btn-sm btn-danger" (click)="cancelReservation(booking)" *ngIf="booking.status=='reserved'">Cancel</button>
               </td>
             </tr>
           </tbody>

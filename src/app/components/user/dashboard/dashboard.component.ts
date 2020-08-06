@@ -176,9 +176,7 @@ export class DashboardComponent implements OnInit {
   }
 
   paymentHandler(res: any) {
-    $('#overlay').show();
     this.zone.run(() => {
-      console.log(res);
       var id = JSON.parse(localStorage.getItem('user'))['id'];
       var parking_id = parseInt((<HTMLInputElement>document.getElementById('parking_id')).value);
       var fromdatetime = this.reserveForm.get('fromdatetime').value;
@@ -186,7 +184,7 @@ export class DashboardComponent implements OnInit {
       var cost = this.cost;
       var paymentId = res['razorpay_payment_id'];
       this.reservation=new ReserveParking(id,parking_id,fromdatetime,todatetime,paymentId,cost,this.addToWaiting?"waiting":"reserved");
-      console.log(this.reservation);
+      $('#overlay').show();
       this.userService.reserveParking(this.reservation).subscribe(
         (data) => {
           $('#reserveForm').modal('hide');
@@ -201,8 +199,8 @@ export class DashboardComponent implements OnInit {
           console.log(error);
         }
       );
+      $('#overlay').hide();
     });
-    $('#overlay').hide();
   }
 
   checkAvailability(fromdatetime:any,todatetime:any)
