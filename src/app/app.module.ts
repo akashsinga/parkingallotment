@@ -24,6 +24,7 @@ import { MybookingsComponent } from './components/user/mybookings/mybookings.com
 import { ManageusersComponent } from './components/admin/manageusers/manageusers.component';
 import { ForgotpasswordComponent } from './components/forgotpassword/forgotpassword.component';
 import { ReportsComponent } from './components/admin/reports/reports.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { ReportsComponent } from './components/admin/reports/reports.component';
     ManageusersComponent,
     ForgotpasswordComponent,
     ReportsComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

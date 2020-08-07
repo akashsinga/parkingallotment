@@ -52,7 +52,7 @@ header nav ul li a {
   display: block;
   transition: 0.8s;
 }
-header nav ul .dropdown:hover,
+
 header nav ul li a.active {
   text-decoration: none;
   color: #eeeeee;
@@ -148,9 +148,6 @@ header nav ul li a:hover{
   background-color:gainsboro;
   display:flex;
   justify-content: center;
-  animation-name: fadeIn;
-  animation-duration: 3s;
-  animation-fill-mode: forwards;
 }
 
 @keyframes fadeIn{
@@ -183,6 +180,9 @@ header nav ul li a:hover{
   flex-direction: column;
   justify-content: center;
   min-height: 100vh;
+  animation-name: fadeIn;
+  animation-duration: 3s;
+  animation-fill-mode: forwards;
 }
 
 .title {
