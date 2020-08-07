@@ -16,7 +16,6 @@ export class ManageusersComponent implements OnInit {
   constructor(private adminService:AdminService,private toaster:ToastrService,private fb:FormBuilder) { 
     this.adminService.getUsers().subscribe((data)=>{
       this.tableData=data;
-      console.log(this.tableData);
     });
     this.createForm();
   }

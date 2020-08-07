@@ -40,7 +40,6 @@ export class MybookingsComponent implements OnInit {
 
   showDetails(booking:any)
   {
-    console.log(booking);
     document.getElementById('id').innerText=booking.id;
     document.getElementById('booking_date').innerText=booking.booking_date;
     document.getElementById('payment_id').innerText=booking.payment_Id;

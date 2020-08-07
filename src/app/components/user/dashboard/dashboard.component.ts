@@ -148,8 +148,6 @@ export class DashboardComponent implements OnInit {
     return (formgroup: FormGroup) => {
       const from = formgroup.controls[fromdate];
       const to = formgroup.controls[todate];
-      console.log(from.value);
-      console.log(to.value);
       if (this.diff_hours(new Date(from.value), new Date()) < 2) {
         from.setErrors({ invalid: true });
       }
@@ -207,7 +205,6 @@ export class DashboardComponent implements OnInit {
 
   checkAvailability(fromdatetime:any,todatetime:any)
   {
-    console.log(fromdatetime);
     var parking_id = parseInt((<HTMLInputElement>document.getElementById('parking_id')).value);
     this.check=new CheckAvailability(fromdatetime,todatetime,parking_id);
     this.userService.isAvailable(this.check).subscribe((data)=>

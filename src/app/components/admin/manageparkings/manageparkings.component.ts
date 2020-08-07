@@ -104,10 +104,8 @@ export class ManageparkingsComponent implements OnInit {
   {
     this.owner=new Owner(this.lot_form.get('owner_name').value,this.lot_form.get('owner_email').value,this.lot_form.get('owner_mobile').value);
     this.parking_lot=new ParkingLot(this.lot_form.get('name').value,this.lot_form.get('latitude').value,this.lot_form.get('longitude').value,this.lot_form.get('price').value,this.owner);
-    console.log(this.parking_lot);
     this.adminService.addParkingLocation(this.parking_lot).subscribe(
       (data) => {
-        console.log(data);
         this.toaster.success(data['response']);
         $('#addForm').modal('hide');
         setTimeout(() => {
@@ -162,7 +160,6 @@ export class ManageparkingsComponent implements OnInit {
     var id=this.lot_form.get('id').value;
     this.adminService.editParkingLocation(this.parking_lot,id).subscribe(
       (data) => {
-        console.log(data);
         this.toaster.success(data['response']);
         $('#lot-form').modal('hide');
         setTimeout(() => {

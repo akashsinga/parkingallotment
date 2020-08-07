@@ -89,8 +89,8 @@
                 {{ booking.status }}
               </td>
               <td>
-                <button class="btn btn-sm btn-info" (click)="showDetails(booking)">View Details</button>
-                <button class="btn btn-sm btn-danger" (click)="cancelReservation(booking)" *ngIf="booking.status=='reserved'">Cancel</button>
+                <button class="btn btn-sm btn-info table-btn" (click)="showDetails(booking)">View Details</button>
+                <button class="btn btn-sm btn-danger table-btn" (click)="cancelReservation(booking)" *ngIf="booking.status=='reserved'">Cancel</button>
               </td>
             </tr>
           </tbody>
