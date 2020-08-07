@@ -30,7 +30,8 @@
             "allowedCommonJsDependencies": [
               "datatables.net",
               "jquery",
-              "jspdf"
+              "jspdf",
+              "jspdf-autotable"
            ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.css",

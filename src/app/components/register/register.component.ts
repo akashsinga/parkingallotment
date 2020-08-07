@@ -103,7 +103,6 @@ export class RegisterComponent implements OnInit {
     this.registerRequest=new RegisterRequest(fullname,username,mobile,email,password,'user');
     this.authService.registerUser(this.registerRequest).subscribe(
       (data) => {
-        console.log(data);
         this.toaster.success("Registration Successful");
         this.toaster.info("Redirecting to Login Page");
         setTimeout(()=>{
@@ -112,8 +111,9 @@ export class RegisterComponent implements OnInit {
         },3000)
       },
       (error) => {
+        $('#overlay').hide();
         console.log(error);
-        this.toaster.error('Registration Failed');
+        this.toaster.error("Please Try After Some Time");
       }
     );
   }

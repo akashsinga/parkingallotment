@@ -66,8 +66,9 @@ export class LoginComponent implements OnInit {
       },
       (error) => 
       {
+        $('#overlay').hide();
         console.log(error);
-        console.log('Login Failed');
+        this.toaster.error("Please Try After Some Time");
       }
     );
   }
