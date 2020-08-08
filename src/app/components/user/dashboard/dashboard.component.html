@@ -42,7 +42,7 @@
             <input class="form-control" [formControlName]="'todatetime'" id="todatetime" type="datetime-local" placeholder="Enter To Date"/>
           </div>
         </form>
-        <div class="alert alert-info" *ngIf="cost">
+        <div class="alert alert-info cost-info" *ngIf="cost">
           <label type="text" id="total-hours" class="text-dark"
             ><b>Estimated Cost: ₹ {{cost}}</b></label
           >
