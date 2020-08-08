@@ -55,6 +55,6 @@ export class ReportsComponent implements OnInit {
   {
     const doc = new jsPDF();
     autoTable(doc, { html: '#reports' });
-    doc.save('table.pdf')
+    doc.save(this.reportsForm.get('fromdatetime').value+"-"+this.reportsForm.get('todatetime').value+".pdf");
   }
 }

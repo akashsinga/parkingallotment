@@ -28,6 +28,7 @@ export class DashboardComponent implements OnInit {
   longitude:number;
   formErrors = reservationFormErrors;
   icon="../../../../assets/img/blue-dot.png";
+  parking_icon="../../../../assets/img/parking_icon2.png";
 
   private window: ICustomWindow;
   public rzp: any;
@@ -175,8 +176,9 @@ export class DashboardComponent implements OnInit {
   }
 
   paymentHandler(res: any) {
+    $('#reserveForm').modal('hide');
+    $('#overlay').show();
     this.zone.run(() => {
-      $('#overlay').show();
       var id = this.storage.getUser()['id'];
       var parking_id = parseInt((<HTMLInputElement>document.getElementById('parking_id')).value);
       var fromdatetime = this.reserveForm.get('fromdatetime').value;
@@ -186,7 +188,6 @@ export class DashboardComponent implements OnInit {
       this.reservation=new ReserveParking(id,parking_id,fromdatetime,todatetime,paymentId,cost,this.addToWaiting?"waiting":"reserved");
       this.userService.reserveParking(this.reservation).subscribe(
         (data) => {
-          $('#reserveForm').modal('hide');
           $('#overlay').hide();
           Swal.fire({
             icon: 'success',

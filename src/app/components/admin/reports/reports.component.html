@@ -17,7 +17,7 @@
                         <label>To Date</label>
                         <input class="form-control" [formControlName]="'todatetime'"  type="datetime-local">
                     </div>
-                        <button class="btn btn-success generate-button" (click)="getReports()">Generate</button>
+                        <button class="btn btn-success btn-sm generate-button" (click)="getReports()">Generate</button>
                 </div>
             </form>
             <hr>
@@ -64,7 +64,7 @@
                       {{row.booking_date}}
                   </td>
                   <td>
-                    ₹{{row.cost}}
+                    {{"₹"+row.cost}}
                   </td>
                   <td>
                       {{row.location.name}}

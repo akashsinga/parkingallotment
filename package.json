@@ -10,17 +10,17 @@
     "e2e": "ng e2e"
   },
   "browser": {
-		"fs": false,
-		"path": false,
-		"os": false,
-		"crypto": false,
-		"stream": false,
-		"http": false,
-		"tls": false,
-		"zlib": false,
-		"https": false,
-		"net": false
-	},
+    "fs": false,
+    "path": false,
+    "os": false,
+    "crypto": false,
+    "stream": false,
+    "http": false,
+    "tls": false,
+    "zlib": false,
+    "https": false,
+    "net": false
+  },
   "private": true,
   "dependencies": {
     "@agm/core": "^1.1.0",
@@ -37,7 +37,6 @@
     "@angular/router": "~10.0.2",
     "@types/crypto-js": "^3.1.47",
     "angular-datatables": "^9.0.2",
-    "angular2-google-maps": "^0.17.0",
     "bootstrap": "^4.5.0",
     "crypto-js": "^4.0.0",
     "datatables.net": "^1.10.21",

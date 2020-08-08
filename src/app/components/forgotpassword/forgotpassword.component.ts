@@ -118,6 +118,7 @@ export class ForgotpasswordComponent implements OnInit {
   resetPassword()
   {
     $('#overlay').show();
+    $('#passwordReset').modal('hide');
     this.reset=new ResetPassword(this.forgotPassword.get('email').value,this.passwordReset.get('password').value);
     this.authService.resetPassword(this.reset).subscribe((data)=>{
       Swal.fire({
@@ -128,8 +129,8 @@ export class ForgotpasswordComponent implements OnInit {
       })
       this.toaster.info('Redirecting to Login');
       setTimeout(()=>{
-        $('#overlay').hide();
         this.router.navigate(['']);
+        $('#overlay').hide();
       },2000);
     })
   }
@@ -138,5 +139,6 @@ export class ForgotpasswordComponent implements OnInit {
   {
     this.codeSent=true;
     $('.verification_code').css('display','block');
+    $("input").prop('required',true);
   }
 }
