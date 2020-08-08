@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { login } from 'src/app/shared/validationMessages';
 import { loginFormErrors } from 'src/app/shared/formErrors';
+import { StorageService } from 'src/app/services/storage-service.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -17,10 +18,20 @@ export class LoginComponent implements OnInit {
   loginRequest: LoginRequest;
   formErrors=loginFormErrors;
 
-  constructor(private formBuilder: FormBuilder,private authService: AuthService,private router: Router,private toaster: ToastrService)
+  constructor(private formBuilder: FormBuilder,private authService: AuthService,private router: Router,private toaster: ToastrService,private storage:StorageService)
   {
+    if(this.authService.isLoggedIn())
+    {
+      if(this.storage.getUser()['type']==="admin")
+      {
+        this.router.navigate(['user']);
+      }
+      else
+      {
+        this.router.navigate(['admin']);
+      }
+    }
     this.createForm();
-    this.authService.isLoggedIn();
     this.loginRequest = 
     {
       username: '',
@@ -48,7 +59,7 @@ export class LoginComponent implements OnInit {
         if(data.hasOwnProperty('id')) 
         {
           this.toaster.success('Login Successful');
-          localStorage.setItem('user', JSON.stringify(data));
+          this.storage.storeUser(data);
           if (data['type'] == 'user') 
           {
             this.router.navigate(['user/dashboard']);

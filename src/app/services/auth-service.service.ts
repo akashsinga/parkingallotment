@@ -6,12 +6,13 @@ import { LoginRequest } from '../Dto/LoginRequest';
 import { Router } from '@angular/router';
 import { VerifyCode } from '../Dto/VerifyCode';
 import { ResetPassword } from '../Dto/ResetPassword';
+import { StorageService } from './storage-service.service';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private url = 'http://localhost:8080/';
-  constructor(private httpClient: HttpClient, private router: Router) {}
+  constructor(private httpClient: HttpClient, private router: Router,private storage:StorageService) {}
 
   registerUser(registerRequest: RegisterRequest): Observable<any> {
     return this.httpClient.post(this.url + 'register', registerRequest);
@@ -24,7 +25,7 @@ export class AuthService {
   logoutUser() {
     $('#overlay').show();
     console.log('cleared');
-    localStorage.clear();
+    sessionStorage.clear();
     setTimeout(()=>{
       $('#overlay').hide();
       this.router.navigate(['']);
@@ -35,7 +36,7 @@ export class AuthService {
   {
     if(this.isLoggedIn())
     {
-      let user = JSON.parse(localStorage.getItem('user'));
+      let user = this.storage.getUser();
       if(user['type']==='user')
       {
         return true;
@@ -48,7 +49,7 @@ export class AuthService {
   {
     if(this.isLoggedIn())
     {
-      let user = JSON.parse(localStorage.getItem('user'));
+      let user = this.storage.getUser();
       if(user['type']==='admin')
       {
         return true;
@@ -58,7 +59,7 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    if (localStorage.getItem('user') === null) {
+    if (sessionStorage.getItem('user') === null) {
       return false;
     }
     return true;

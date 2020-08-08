@@ -31,7 +31,8 @@
               "datatables.net",
               "jquery",
               "jspdf",
-              "jspdf-autotable"
+              "jspdf-autotable",
+              "crypto-js"
            ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.css",

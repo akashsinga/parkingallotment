@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ReserveParking } from '../Dto/ReserveParking';
 import { CheckAvailability } from '../Dto/CheckAvailability';
+import { StorageService } from './storage-service.service';
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
   private url="http://localhost:8080/user/";
-  constructor(private httpclient:HttpClient) { }
+  constructor(private httpclient:HttpClient,private storage:StorageService) { }
 
   getLocations():Observable<any>
   {
@@ -23,7 +24,7 @@ export class UserService {
 
   getPreviousBookings():Observable<any>
   {
-    let user=JSON.parse(localStorage.getItem("user"));
+    let user=this.storage.getUser();
     return this.httpclient.get(this.url+"bookings/"+user['id']);  
   }
 

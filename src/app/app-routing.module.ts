@@ -11,17 +11,18 @@ import { MybookingsComponent } from './components/user/mybookings/mybookings.com
 import { ManageusersComponent } from './components/admin/manageusers/manageusers.component';
 import { ForgotpasswordComponent } from './components/forgotpassword/forgotpassword.component';
 import { ReportsComponent } from './components/admin/reports/reports.component';
-
+import { AuthGuard } from './guards/auth-guard.guard';
 const routes: Routes = [
   //auth routes
   { path: '', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'forgot',component:ForgotpasswordComponent},
+  { path: 'forgot', component: ForgotpasswordComponent },
   //user routes
   {
     path: 'user',
     component: UserlayoutComponent,
     children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: UserDashboard },
       { path: 'bookings', component: MybookingsComponent },
     ],
@@ -30,13 +31,17 @@ const routes: Routes = [
   {
     path: 'admin',
     component: AdminlayoutComponent,
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     children: [
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: AdminDashboard },
       { path: 'parkings/lots', component: ManageparkingsComponent },
-      { path: 'users',component:ManageusersComponent },
-      { path: 'reports',component:ReportsComponent}
+      { path: 'users', component: ManageusersComponent },
+      { path: 'reports', component: ReportsComponent },
     ],
   },
+  { path: '**', redirectTo: 'admin' },
 ];
 
 @NgModule({

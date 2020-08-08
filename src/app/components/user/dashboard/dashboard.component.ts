@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { reservation } from 'src/app/shared/validationMessages';
 import { reservationFormErrors } from 'src/app/shared/formErrors';
 import Swal from 'sweetalert2';
+import { StorageService } from 'src/app/services/storage-service.service';
 declare var $:any;
 @Component({
   selector: 'app-dashboard',
@@ -55,7 +56,7 @@ export class DashboardComponent implements OnInit {
     },
   };
 
-  constructor(private userService: UserService,private zone: NgZone,private winRef: WindowRefService,private formBuilder: FormBuilder,private toaster:ToastrService) {
+  constructor(private userService: UserService,private zone: NgZone,private winRef: WindowRefService,private formBuilder: FormBuilder,private toaster:ToastrService,private storage:StorageService) {
     this.userService.getLocations().subscribe((data) => {
       this.tableData = data;
     });
@@ -176,7 +177,7 @@ export class DashboardComponent implements OnInit {
   paymentHandler(res: any) {
     this.zone.run(() => {
       $('#overlay').show();
-      var id = JSON.parse(localStorage.getItem('user'))['id'];
+      var id = this.storage.getUser()['id'];
       var parking_id = parseInt((<HTMLInputElement>document.getElementById('parking_id')).value);
       var fromdatetime = this.reserveForm.get('fromdatetime').value;
       var todatetime = this.reserveForm.get('todatetime').value;
@@ -223,7 +224,7 @@ export class DashboardComponent implements OnInit {
           if (result.value) {
             this.continue=true;
             this.addToWaiting=true;
-            let user = JSON.parse(localStorage.getItem('user'));
+            let user = this.storage.getUser();
             this.options.prefill.name = user['username'];
             this.options.amount = this.cost * 100;
             this.rzp = new this.winRef.NativeWindow['Razorpay'](this.options);
@@ -240,7 +241,7 @@ export class DashboardComponent implements OnInit {
       else
       {
         this.addToWaiting=false;
-        let user = JSON.parse(localStorage.getItem('user'));
+        let user = this.storage.getUser();
         this.options.prefill.name = user['username'];
         this.options.amount = this.cost * 100;
         this.rzp = new this.winRef.NativeWindow['Razorpay'](this.options);
