@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Mulish&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Acme&display=swap');
+$gradient:linear-gradient(to right, rgb(15, 32, 39), rgb(32, 58, 67), rgb(44, 83, 100));
 * {
   margin: 0;
   padding: 0;
@@ -19,7 +20,7 @@ header {
   top: 0;
   left: 0;
   padding: 0 100px;
-  background: linear-gradient(to right, rgb(15, 32, 39), rgb(32, 58, 67), rgb(44, 83, 100));
+  background: $gradient;
   width: 100%;
   box-sizing: border-box;
 }
