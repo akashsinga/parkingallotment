@@ -45,9 +45,7 @@ export class ManageparkingsComponent implements OnInit {
   }
 
   mapClicked($event: MouseEvent) {
-    this.latitude= $event.coords.lat;
-    this.longitude= $event.coords.lng;
-    this.showAddForm(this.latitude,this.longitude);
+    this.showAddForm($event.coords.lat,$event.coords.lat);
   }
   
   createForm(): void {
